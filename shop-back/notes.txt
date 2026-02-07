@@ -1,0 +1,24 @@
+# Creating a new project
+nest new <name of project>
+
+# Creating a new module
+nest g module <name of module>
+
+# Creating a new controller
+nest g controller <name of controller>
+
+# Creating a new service
+nest g service <name of service>
+
+# Installing typeOrm 
+npm install @nestjs/typeorm typeorm
+
+# Validation packages
+npm install class-validator class-transformer
+
+
+Action,Old Way (npm),New Way (Bun)
+Install,npm install,bun install
+Add Package,npm install @nestjs/config,bun add @nestjs/config
+Run Dev,npm run start:dev,bun dev
+Generate,nest g service users,bunx nest g service users
