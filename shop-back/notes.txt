@@ -22,3 +22,12 @@ Install,npm install,bun install
 Add Package,npm install @nestjs/config,bun add @nestjs/config
 Run Dev,npm run start:dev,bun dev
 Generate,nest g service users,bunx nest g service users
+
+
+# Sqlite commands
+.tables ->  List all tables
+.schema table_name -> Show table schema
+
+.headers on  -> Show column headers
+.mode column  -> Format output in columns
+SELECT * FROM table_name LIMIT 10;
