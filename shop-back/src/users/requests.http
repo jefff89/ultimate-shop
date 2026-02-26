@@ -3,9 +3,23 @@ POST http://localhost:3002/auth/signup
 content-type: application/json
 
 {
-    "email": "jeff@test.com",
-    "password": "test"
+    "email": "jeff2@test2.com",
+    "password": "test2"
 }
+### signin a user
+POST http://localhost:3002/auth/signin
+content-type: application/json
+
+{
+    "email": "jeff1@test1.com",
+    "password": "test1"
+}
+
+### Get the currently signedin user
+GET  http://localhost:3002/auth/whoami
+
+### Sign out
+POST  http://localhost:3002/auth/signout
 
 ### Find a user with id
 GET  http://localhost:3002/auth/2
