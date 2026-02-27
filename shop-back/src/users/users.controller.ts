@@ -9,6 +9,7 @@ import {
   Query,
   NotFoundException,
   Session,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user-dto';
 import { UsersService } from './users.service';
@@ -16,7 +17,9 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
-
+import { CurrentUser } from './decorators/current-user.decorator';
+import { AuthGuard } from 'src/guards/auth.gurad';
+import { User } from './user.entity';
 @Controller('auth')
 @Serialize(UserDto) // interceptor for sending requested response out without password included applied to all controller routes
 export class UsersController {
@@ -25,9 +28,14 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
+  // @Get('/whoami')
+  // whoAmI(@Session() session: any) {
+  //   return this.usersService.findOne(session.userId);
+  // }
   @Get('/whoami')
-  whoAmI(@Session() session: any) {
-    return this.usersService.findOne(session.userId);
+  @UseGuards(AuthGuard)
+  whoAmI(@CurrentUser() user: User) {
+    return user;
   }
 
   @Post('/signout')
@@ -53,7 +61,7 @@ export class UsersController {
   // @Serialize(UserDto) // instead of using long line above, we wrap the interceptor in a decorator
   @Get('/:id')
   async findUserById(@Param('id') id: string) {
-    console.log('handler is running'); // to see in SerializeInterceptor it runs after context and before handler logs there
+    // console.log('handler is running'); // to see in SerializeInterceptor it runs after context and before handler logs there
     const user = await this.usersService.findOne(parseInt(id));
     if (!user) {
       throw new NotFoundException('user not found');
