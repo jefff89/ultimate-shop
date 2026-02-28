@@ -1,0 +1,48 @@
+### Create a new report
+POST http://localhost:3002/reports
+content-type: application/json
+
+{
+    "make": "toyota",
+    "model": "corolla",
+    "year": 1980,
+    "mileage": 100000,
+    "lng": 0,
+    "lat": 0,
+    "price": 500000,
+}
+### signin a user
+POST http://localhost:3002/auth/signin
+content-type: application/json
+
+{
+    "email": "jeff1@test1.com",
+    "password": "test1"
+}
+
+### Get the currently signedin user
+GET  http://localhost:3002/auth/whoami
+
+### Sign out
+POST  http://localhost:3002/auth/signout
+
+### Find a user with id
+GET  http://localhost:3002/auth/2
+
+
+### Find all users with a given email
+GET  http://localhost:3002/auth?email=jeff@test.com
+
+
+### Delete a user with id
+DELETE   http://localhost:3002/auth/1
+
+
+### update a user with id
+PATCH  http://localhost:3002/auth/2
+content-type: application/json
+
+{
+    "email": "jeff@test.com",
+    "password": "test"
+}

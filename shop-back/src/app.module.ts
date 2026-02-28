@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
+import { ReportsModule } from './reports/reports.module';
+import { Report } from './reports/report.entity';
 
 @Module({
   // implementing typeorm
@@ -11,10 +13,11 @@ import { User } from './users/user.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [User], // Connect the entity to the root connection
+      entities: [User, Report], // Connect the entity to the root connection
       synchronize: true, // migrate codes and update tables automatically
     }),
     UsersModule,
+    ReportsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
