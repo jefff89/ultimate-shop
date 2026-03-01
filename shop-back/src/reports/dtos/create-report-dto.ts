@@ -17,7 +17,7 @@ export class CreateReportDto {
   @IsNumber()
   @Min(1930)
   @Max(2050)
-  year!: string;
+  year!: number;
 
   @IsNumber()
   @Min(0)

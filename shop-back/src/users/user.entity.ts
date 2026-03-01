@@ -5,9 +5,9 @@ import {
   AfterInsert,
   AfterUpdate,
   AfterRemove,
+  OneToMany,
 } from 'typeorm';
-// import { Transaction } from 'src/transactions/transaction.entity';
-// import { OneToMany } from 'typeorm';
+// import { Report } from 'src/reports/report.entity';
 
 @Entity()
 export class User {
@@ -19,6 +19,10 @@ export class User {
 
   @Column()
   password!: string;
+
+  // @OneToMany(() => Report, (report) => report.user)
+  @OneToMany('Report', (report) => report.user)
+  reports!: Report[];
 
   // @OneToMany(() => Transaction, (transaction) => transaction.category)
   // transactions: Transaction[]; // One to Many relation with transaction

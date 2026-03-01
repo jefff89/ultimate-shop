@@ -3,21 +3,21 @@ POST http://localhost:3002/reports
 content-type: application/json
 
 {
-    "make": "toyota",
-    "model": "corolla",
+    "make": "Ferrari",
+    "model": "Red",
     "year": 1980,
     "mileage": 100000,
     "lng": 0,
     "lat": 0,
-    "price": 500000,
+    "price": 500000
 }
 ### signin a user
 POST http://localhost:3002/auth/signin
 content-type: application/json
 
 {
-    "email": "jeff1@test1.com",
-    "password": "test1"
+    "email": "jeff2@test2.com",
+    "password": "test2"
 }
 
 ### Get the currently signedin user
