@@ -3,14 +3,22 @@ POST http://localhost:3002/reports
 content-type: application/json
 
 {
-    "make": "Ferrari",
-    "model": "Red",
+    "make": "Mustang",
+    "model": "Art",
     "year": 1980,
     "mileage": 100000,
     "lng": 0,
     "lat": 0,
     "price": 500000
 }
+### approve a report
+Patch http://localhost:3002/reports/5
+content-type: application/json
+
+{
+    "approved": true
+}
+
 ### signin a user
 POST http://localhost:3002/auth/signin
 content-type: application/json
