@@ -3,15 +3,23 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from '../users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
-
+import ms from 'ms';
+import { ConfigService } from '@nestjs/config';
+import { User } from '../user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
+  ) {}
   async signup(email: string, password: string) {
     // See if email in use
     const user = await this.usersService.find(email);
@@ -36,6 +44,24 @@ export class AuthService {
     return newUser;
   }
 
+  async login(user: User, response: Response) {
+    const expires = new Date();
+    expires.setMilliseconds(
+      expires.getMilliseconds() +
+        ms(this.configService.getOrThrow<string>('JWT_EXPIRATION')),
+    );
+    const tokenPayload: number = {
+      userId: user.id,
+    };
+    const token = this.jwtService.sign(tokenPayload);
+    response.cookie('Authentication', token, {
+      secure: true,
+      httpOnly: true,
+      expires,
+    });
+  }
+
+  // the name is better to be verifyUser rather than signin when we want use the jwt and not the cookieSession
   async signin(email: string, password: string) {
     const [user] = await this.usersService.find(email);
     if (!user) {
