@@ -50,15 +50,18 @@ export class AuthService {
       expires.getMilliseconds() +
         ms(this.configService.getOrThrow<string>('JWT_EXPIRATION')),
     );
-    const tokenPayload: number = {
-      userId: user.id,
+    const tokenPayload = {
+      userId: user?.id,
     };
     const token = this.jwtService.sign(tokenPayload);
+
     response.cookie('Authentication', token, {
       secure: true,
       httpOnly: true,
       expires,
     });
+
+    response.json({ tokenPayload });
   }
 
   // the name is better to be verifyUser rather than signin when we want use the jwt and not the cookieSession

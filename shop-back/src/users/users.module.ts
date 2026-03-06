@@ -10,6 +10,7 @@ import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
 import { LocalStrategy } from './auth/strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './auth/strategies/jwt.strategy';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]), // Connect the entity to its parent module. And creates the repository
@@ -30,6 +31,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     UsersService,
     AuthService,
     LocalStrategy,
+    JwtStrategy,
     // { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
   ],
 })

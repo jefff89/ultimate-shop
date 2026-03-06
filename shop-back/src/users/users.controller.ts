@@ -19,10 +19,12 @@ import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth/auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { AuthGuard } from 'src/guards/auth.gurad';
+import type { Response } from 'express';
+// import { AuthGuard } from 'src/guards/auth.gurad';
 import { User } from './user.entity';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
-import express from 'express';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+
 @Controller('auth')
 @Serialize(UserDto) // interceptor for sending requested response out without password included applied to all controller routes
 export class UsersController {
@@ -35,10 +37,15 @@ export class UsersController {
   // whoAmI(@Session() session: any) {
   //   return this.usersService.findOne(session.userId);
   // }
+  // @Get('/whoami')
+  // @UseGuards(AuthGuard) // this is for cookieSession method of authetiction
+  //   whoAmI(@CurrentUser() user: User) {
+  //   return user;
+  // }
   @Get('/whoami')
-  @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user: User) {
-    return user;
+  @UseGuards(JwtAuthGuard) // this is for jwt method of authentication
+  whoAmI(@CurrentUser() userId: number) {
+    return userId;
   }
 
   @Post('/signout')
@@ -65,7 +72,7 @@ export class UsersController {
   @Post('/signin')
   async signin(
     @CurrentUser() user: User,
-    @Res({ passthrough: true }) response: express.Response,
+    @Res({ passthrough: true }) response: Response,
   ) {
     return this.authService.login(user, response);
   }

@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -6,7 +6,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { ReportsModule } from './reports/reports.module';
 import { Report } from './reports/report.entity';
-import cookieSession from 'cookie-session';
+// import cookieSession from 'cookie-session';
 
 @Module({
   // implementing typeorm
@@ -24,13 +24,14 @@ import cookieSession from 'cookie-session';
   providers: [AppService],
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(
-        cookieSession({
-          keys: ['assasfddf'],
-        }),
-      )
-      .forRoutes('*');
-  }
+  // this is for cookieSession authentication method
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(
+  //       cookieSession({
+  //         keys: ['assasfddf'],
+  //       }),
+  //     )
+  //     .forRoutes('*');
+  // }
 }
