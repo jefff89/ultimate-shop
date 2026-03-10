@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
@@ -20,6 +21,7 @@ import { Route as DemoAiStructuredRouteImport } from './routes/demo/ai-structure
 import { Route as DemoAiImageRouteImport } from './routes/demo/ai-image'
 import { Route as DemoAiChatRouteImport } from './routes/demo/ai-chat'
 import { Route as DemoGuitarsIndexRouteImport } from './routes/demo/guitars/index'
+import { Route as AuthedDashboardIndexRouteImport } from './routes/_authed/dashboard/index'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoGuitarsGuitarIdRouteImport } from './routes/demo/guitars/$guitarId'
@@ -42,6 +44,10 @@ import { Route as DemoApiAiChatRouteImport } from './routes/demo/api.ai.chat'
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthedRoute = AuthedRouteImport.update({
+  id: '/_authed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -93,6 +99,11 @@ const DemoGuitarsIndexRoute = DemoGuitarsIndexRouteImport.update({
   id: '/demo/guitars/',
   path: '/demo/guitars/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthedDashboardIndexRoute = AuthedDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => AuthedRoute,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
@@ -205,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/dashboard/': typeof AuthedDashboardIndexRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
@@ -236,6 +248,7 @@ export interface FileRoutesByTo {
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/dashboard': typeof AuthedDashboardIndexRoute
   '/demo/guitars': typeof DemoGuitarsIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
@@ -250,6 +263,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authed': typeof AuthedRouteWithChildren
   '/mcp': typeof McpRoute
   '/demo/ai-chat': typeof DemoAiChatRoute
   '/demo/ai-image': typeof DemoAiImageRoute
@@ -268,6 +282,7 @@ export interface FileRoutesById {
   '/demo/guitars/$guitarId': typeof DemoGuitarsGuitarIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
+  '/_authed/dashboard/': typeof AuthedDashboardIndexRoute
   '/demo/guitars/': typeof DemoGuitarsIndexRoute
   '/demo/api/ai/chat': typeof DemoApiAiChatRoute
   '/demo/api/ai/image': typeof DemoApiAiImageRoute
@@ -301,6 +316,7 @@ export interface FileRouteTypes {
     | '/demo/guitars/$guitarId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/dashboard/'
     | '/demo/guitars/'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
@@ -332,6 +348,7 @@ export interface FileRouteTypes {
     | '/demo/guitars/$guitarId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/dashboard'
     | '/demo/guitars'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
@@ -345,6 +362,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authed'
     | '/mcp'
     | '/demo/ai-chat'
     | '/demo/ai-image'
@@ -363,6 +381,7 @@ export interface FileRouteTypes {
     | '/demo/guitars/$guitarId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
+    | '/_authed/dashboard/'
     | '/demo/guitars/'
     | '/demo/api/ai/chat'
     | '/demo/api/ai/image'
@@ -377,6 +396,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthedRoute: typeof AuthedRouteWithChildren
   McpRoute: typeof McpRoute
   DemoAiChatRoute: typeof DemoAiChatRoute
   DemoAiImageRoute: typeof DemoAiImageRoute
@@ -414,6 +434,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authed': {
+      id: '/_authed'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -485,6 +512,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demo/guitars/'
       preLoaderRoute: typeof DemoGuitarsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authed/dashboard/': {
+      id: '/_authed/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthedDashboardIndexRouteImport
+      parentRoute: typeof AuthedRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -615,8 +649,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthedRouteChildren {
+  AuthedDashboardIndexRoute: typeof AuthedDashboardIndexRoute
+}
+
+const AuthedRouteChildren: AuthedRouteChildren = {
+  AuthedDashboardIndexRoute: AuthedDashboardIndexRoute,
+}
+
+const AuthedRouteWithChildren =
+  AuthedRoute._addFileChildren(AuthedRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthedRoute: AuthedRouteWithChildren,
   McpRoute: McpRoute,
   DemoAiChatRoute: DemoAiChatRoute,
   DemoAiImageRoute: DemoAiImageRoute,

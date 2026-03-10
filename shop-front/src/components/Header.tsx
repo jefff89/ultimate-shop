@@ -1,10 +1,6 @@
-import { Link } from '@tanstack/react-router'
-
-import BetterAuthHeader from '../integrations/better-auth/header-user.tsx'
-
-import TanChatAIAssistant from './demo-AIAssistant.tsx'
-
 import { useState } from 'react'
+import { Link } from '@tanstack/react-router'
+import SignInPopover from 'src/components/auth/Signin'
 import {
   ChefHat,
   ChevronDown,
@@ -23,6 +19,8 @@ import {
   Webhook,
   X,
 } from 'lucide-react'
+import BetterAuthHeader from '../integrations/better-auth/header-user.tsx'
+import TanChatAIAssistant from './demo-AIAssistant.tsx'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,15 +38,12 @@ export default function Header() {
         >
           <Menu size={24} />
         </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            <img
-              src="/tanstack-word-logo-white.svg"
-              alt="TanStack Logo"
-              className="h-10"
-            />
-          </Link>
+        <h1 className="ml-4 text-xl font-semibold text-chart-4">
+          <Link to="/">ShopAi</Link>
         </h1>
+        <div className="ml-auto">
+          <SignInPopover />
+        </div>
       </header>
 
       <aside

@@ -44,8 +44,8 @@ export class UsersController {
   // }
   @Get('/whoami')
   @UseGuards(JwtAuthGuard) // this is for jwt method of authentication
-  whoAmI(@CurrentUser() userId: number) {
-    return userId;
+  whoAmI(@CurrentUser() userId) {
+    return userId.userId;
   }
 
   @Post('/signout')

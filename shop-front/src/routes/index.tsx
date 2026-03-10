@@ -8,7 +8,12 @@ import {
   Sparkles,
 } from 'lucide-react'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({
+  beforeLoad: ({ context }) => {
+    context.userId
+  },
+  component: App,
+})
 
 function App() {
   const features = [

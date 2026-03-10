@@ -6,7 +6,6 @@ export const CurrentUser = createParamDecorator(
   (_data: never, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
     // return request.currentUser; this is for cookieSession Authentication
-    // console.log(request.user);
     return request.user; // this is for passport authentication, validate method of passport automatically pass user object to request object
   },
 );

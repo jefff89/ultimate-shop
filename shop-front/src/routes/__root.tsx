@@ -5,24 +5,30 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-
+import { getCookie } from 'cookies-next'
 import Header from '../components/Header'
-
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
 import AiDevtools from '../lib/ai-devtools'
-
 import StoreDevtools from '../lib/demo-store-devtools'
-
 import appCss from '../styles.css?url'
-
 import type { QueryClient } from '@tanstack/react-query'
+import { getSignedInUserId } from '@/data/getSignedInUserId'
 
 interface MyRouterContext {
   queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+  notFoundComponent() {
+    return (
+      <div className="text-3xl text-center py-10">Oops! Page not found</div>
+    )
+  },
+  // this beforLoad method will run before the app is loaded
+  beforeLoad: async () => {
+    const userId = await getSignedInUserId()
+    return { userId } // now throughout the whole routes this userId is available
+  },
   head: () => ({
     meta: [
       {

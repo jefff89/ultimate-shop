@@ -25,7 +25,6 @@ async function bootstrap() {
 
   // Allow cross-origin requests during development (adjust origin in production)
   app.enableCors();
-
   await app.listen(process.env.PORT ?? 3002);
 }
 bootstrap();
