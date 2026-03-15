@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { z } from 'zod'
-import { jwtDecode } from 'jwt-decode'
-import { setCookie } from 'cookies-next'
+import { post } from '@/utils/fetch'
+// import { jwtDecode } from 'jwt-decode'
 
 export const signInSchema = z.object({
   email: z.email({ message: 'Invalid email address' }),
@@ -18,27 +18,17 @@ export const signin = createServerFn({
     return signInSchema.parse(data)
   })
   .handler(async ({ data, context }) => {
-    const res = await fetch('http://localhost:3002/auth/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    // const parsedRes = await res.json()
-    // if (!res.ok) {
-    //   return { error: parsedRes.statusText }
-    // }
-    setAuthCookie(res)
-    return res
+    return post('/auth/signin', data, null)
   })
 
-const setAuthCookie = (response: Response) => {
-  const setCookieHeader = response.headers.get('Set-Cookie')
-  if (setCookieHeader) {
-    const token = setCookieHeader.split(';')[0].split('=')[1]
-    setCookie('Authentication', token, {
-      secure: true,
-      httpOnly: true,
-      expires: new Date(jwtDecode(token).exp! * 1000),
-    })
-  }
-}
+// const setAuthCookie = (response: Response) => {
+//   const setCookieHeader = response.headers.get('Set-Cookie')
+//   if (setCookieHeader) {
+//     const token = setCookieHeader.split(';')[0].split('=')[1]
+//     setCookie('Authentication', token, {
+//       secure: true,
+//       httpOnly: true,
+//       expires: new Date(jwtDecode(token).exp! * 1000),
+//     })
+//   }
+// }
