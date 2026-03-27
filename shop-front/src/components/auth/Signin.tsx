@@ -204,7 +204,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from '@tanstack/react-router'
 import { Button } from '../../../components/ui/button'
+
 import {
   Popover,
   PopoverContent,
@@ -234,6 +236,7 @@ import { signInSchema } from '@/data/signin'
 
 export default function SignInPopover() {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -252,6 +255,7 @@ export default function SignInPopover() {
     })
     if (res.ok) {
       setOpen(false)
+      router.navigate('/')
       console.log(res.statusText)
     } else {
       throw new Error(res.statusText)

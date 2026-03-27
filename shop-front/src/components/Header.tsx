@@ -1,6 +1,8 @@
-import { useState } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+// import { getSignedInUserId } from '@/data/getSignedInUserId'
+import { Link, useRouteContext } from '@tanstack/react-router'
 import SignInPopover from 'src/components/auth/Signin'
+import SignoutButton from 'src/components/auth/Signout'
 import {
   ChefHat,
   ChevronDown,
@@ -24,6 +26,8 @@ import TanChatAIAssistant from './demo-AIAssistant.tsx'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { userId } = useRouteContext('/')
+  const isSignedIn = Boolean(userId) && Boolean(userId?.statusCode !== 401)
   const [groupedExpanded, setGroupedExpanded] = useState<
     Record<string, boolean>
   >({})
@@ -42,7 +46,7 @@ export default function Header() {
           <Link to="/">ShopAi</Link>
         </h1>
         <div className="ml-auto">
-          <SignInPopover />
+          {isSignedIn ? <SignoutButton /> : <SignInPopover />}
         </div>
       </header>
 

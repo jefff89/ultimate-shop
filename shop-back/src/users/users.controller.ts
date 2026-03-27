@@ -11,6 +11,7 @@ import {
   Session,
   UseGuards,
   Res,
+  Req,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user-dto';
 import { UsersService } from './users.service';
@@ -49,8 +50,23 @@ export class UsersController {
   }
 
   @Post('/signout')
-  signout(@Session() session: any) {
-    session.userId = null;
+  @UseGuards(JwtAuthGuard)
+  signout(@Req() req: Request, @Res() res: Response) {
+    // 1️⃣ Tell the browser to delete the cookie
+    res.clearCookie('Authentication', {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      // If you set a Path when creating the cookie, include it here as well:
+      // path: '/',
+    });
+
+    // 2️⃣ Optionally, if you keep a server‑side blacklist, add the token to it:
+    // const token = req.cookies.token;   // or req.headers.authorization
+    // await this.tokenBlacklistService.add(token);
+
+    // 3️⃣ Send a short success response (or redirect)
+    return res.status(200).json({ message: 'Signed out' });
   }
 
   @Post('/signup')
