@@ -34,10 +34,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
+      <header className="p-4 flex items-center gap-3 bg-gray-800 text-white shadow-lg">
         <button
           onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-700  rounded-lg transition-colors"
           aria-label="Open menu"
         >
           <Menu size={24} />
@@ -45,6 +45,9 @@ export default function Header() {
         <h1 className="ml-4 text-xl font-semibold text-chart-4">
           <Link to="/">ShopAi</Link>
         </h1>
+
+        {isSignedIn && <Link to="/dashboard">Dashboard</Link>}
+
         <div className="ml-auto">
           {isSignedIn ? <SignoutButton /> : <SignInPopover />}
         </div>

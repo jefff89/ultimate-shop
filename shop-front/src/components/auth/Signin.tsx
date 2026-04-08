@@ -256,7 +256,6 @@ export default function SignInPopover() {
     if (res.ok) {
       setOpen(false)
       router.navigate('/')
-      console.log(res.statusText)
     } else {
       throw new Error(res.statusText)
     }
