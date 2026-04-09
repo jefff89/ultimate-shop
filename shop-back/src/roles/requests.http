@@ -1,0 +1,16 @@
+### Create a new role
+POST http://localhost:3002/roles
+content-type: application/json
+
+{
+    "name": "admin"
+}
+
+### assign  role
+POST http://localhost:3002/roles/assign
+content-type: application/json
+
+{
+    "userId": 1,
+    "roleId": 2
+}

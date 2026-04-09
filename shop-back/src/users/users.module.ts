@@ -11,6 +11,7 @@ import { LocalStrategy } from './auth/strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
+// import { RolesModule } from 'src/roles/roles.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]), // Connect the entity to its parent module. And creates the repository
@@ -25,6 +26,7 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy';
       inject: [ConfigService],
     }),
     ConfigModule,
+    // RolesModule,
   ],
   controllers: [UsersController],
   providers: [
