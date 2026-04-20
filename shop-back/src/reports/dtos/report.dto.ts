@@ -30,5 +30,5 @@ export class ReportDto {
 
   @Transform(({ obj }) => obj.user.id) // obj is the original report entity with user information in it, we only need user id, so we extract it and put it into the userId column
   @Expose()
-  userId!: number;
+  userId!: string;
 }

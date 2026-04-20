@@ -1,0 +1,24 @@
+### Create a new product
+POST http://localhost:3002/product-variants
+content-type: application/json
+
+{
+  "sku": "TS-BLK-M",
+  "options": {
+    "size": "M",
+    "color": "Black",
+    "material": "Cotton"
+  },
+  "price": 19.99,
+  "compareAtPrice": 29.99,
+  "stock": 50,
+  "isActive": true,
+  "productId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "imageIds": [
+    "img-123e4567-e89b-12d3-a456-426614174000",
+    "img-123e4567-e89b-12d3-a456-426614174001"
+  ]
+}
+
+
+

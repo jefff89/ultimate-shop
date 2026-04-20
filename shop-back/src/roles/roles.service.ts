@@ -20,7 +20,7 @@ export class RolesService {
     return this.roleRepo.save(role);
   }
 
-  async assign(userId: number, roleId: number) {
+  async assign(userId: string, roleId: number) {
     const user = await this.userRepo.findOne({
       where: { id: userId },
       relations: ['roles'],

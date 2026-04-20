@@ -5,18 +5,22 @@ import {
   AfterInsert,
   AfterUpdate,
   AfterRemove,
-  // OneToMany,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-// import { Report } from 'src/reports/report.entity';
 import { Role } from 'src/roles/role.entity';
+import type { Address } from 'src/addresses/addresses.entity';
+import type { Cart } from 'src/carts/carts.entity';
+import type { Order } from 'src/orders/orders.entity';
+import type { Report } from 'src/reports/report.entity';
+
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column()
   email!: string;
@@ -24,8 +28,6 @@ export class User {
   @Column()
   password!: string;
 
-  // @Column({ default: true })
-  // admin!: boolean;
   @Column({ nullable: true })
   firstName?: string;
 
@@ -38,12 +40,22 @@ export class User {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  // @OneToMany('Address', (address) => address.user)
-  // addresses!: Address[];
+  @OneToMany('Address', (address) => address.user)
+  addresses!: Address[];
 
-  @ManyToMany('Role', (role) => role.user, {
-    cascade: true, // optional: creates/updates join rows automatically
-    eager: true, // set true only if you always need roles loaded
+  @OneToMany('Cart', (cart) => cart.user)
+  carts!: Cart[];
+
+  @OneToMany('Order', (order) => order.user)
+  orders!: Order[];
+
+  @OneToMany('Report', (report) => report.user)
+  reports!: Report[];
+
+  // ✅ FIX: wrap Role in forwardRef to break circular dependency
+  @ManyToMany('Role', (role) => role.users, {
+    cascade: true,
+    eager: true,
   })
   @JoinTable({
     name: 'user_roles',
@@ -52,21 +64,16 @@ export class User {
   })
   roles!: Role[];
 
-  // @OneToMany(() => Report, (report) => report.user)
-  // @OneToMany('Report', (report) => report.user)
-  // reports!: Report[];
-
-  // @OneToMany(() => Transaction, (transaction) => transaction.category)
-  // transactions: Transaction[]; // One to Many relation with transaction
-
   @AfterInsert()
   logInsert() {
     // console.log('Inserted User with id', this.id);
   }
+
   @AfterUpdate()
   logUpdate() {
     // console.log('Updated User with id', this.id);
   }
+
   @AfterRemove()
   logRemove() {
     // console.log('Removed User with id', this.id);

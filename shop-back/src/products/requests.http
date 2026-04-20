@@ -1,0 +1,24 @@
+### Create a new product
+POST http://localhost:3002/products
+content-type: application/json
+
+{
+  "name": "Nike Air Max 90",
+  "slug": "nike-air-max-90-premium",
+  "description": "Iconic sneaker with premium leather and Air cushioning.",
+  "basePrice": 129.99,
+  "isActive": true,
+  "attributes": {
+    "brand": "Nike",
+    "color": "White/Red",
+    "material": "Leather & Mesh",
+    "weight_grams": 380
+  },
+  "categoryId": "56720c60-695b-4806-8556-7f04991e82dc",
+  "tagIds": [
+    "f7f31b97-6895-4e75-8aae-7a6974c30369"
+  ]
+}
+
+
+

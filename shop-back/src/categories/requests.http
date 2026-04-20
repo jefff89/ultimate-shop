@@ -1,0 +1,19 @@
+### Create a new category
+POST http://localhost:3002/categories
+content-type: application/json
+
+{
+    "name": "dress",
+    "slug": "dress",
+    "description": "dress category"
+}
+
+### Create a new product tag
+POST http://localhost:3002/categories/tags
+content-type: application/json
+
+{
+    "name": "clothes"
+}
+
+
