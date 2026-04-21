@@ -22,7 +22,8 @@ const decimalTransformer: ValueTransformer = {
 
 @Entity()
 @Index(['userId', 'status'])
-@Check('CHK_order_total_non_negative', 'totalAmount >= 0')
+@Check('CHK_order_total_non_negative', 'total_amount >= 0')
+// @Check('CHK_order_total_non_negative', 'totalAmount >= 0')
 export class Order {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -38,10 +39,12 @@ export class Order {
     type: 'decimal',
     precision: 10,
     scale: 2,
+    name: 'total_amount', // 👈 explicit snake_case column name
     transformer: decimalTransformer,
   })
   totalAmount!: number;
 
+  // Then the CHECK can use snake_case
   @Column({ type: 'varchar', length: 20 })
   status!: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
 

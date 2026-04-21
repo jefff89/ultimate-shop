@@ -19,7 +19,7 @@ export class ProductVariant {
 
   //   @Column({ type: 'jsonb' })
   // e.g., { size: 'M', color: 'Red' }
-  @Column({ type: 'json', nullable: true })
+  @Column({ type: 'jsonb', nullable: true })
   options!: Record<string, any>;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })

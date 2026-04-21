@@ -31,3 +31,33 @@ Generate,nest g service users,bunx nest g service users
 .headers on  -> Show column headers
 .mode column  -> Format output in columns
 SELECT * FROM table_name LIMIT 10;
+
+
+# postgresql
+# Connect to your database
+psql -U jeff -d start_nest_shop_db -h localhost
+# Enter your password when prompted
+-- List all tables in the current database
+\dt
+
+-- List all tables with more details (including size, description)
+\dt+
+
+-- List all relations (tables, views, sequences, etc.)
+\z
+
+-- Describe a specific table structure
+\d "order"        -- Note: quotes needed for uppercase/camelCase names
+\d role
+\d order_line_item
+
+-- Or use snake_case if your tables use that naming
+\d order_line_item-- 
+
+--Show all tables in the public schema
+SELECT table_name FROM information_schema.tables 
+WHERE table_schema = 'public' 
+AND table_type = 'BASE TABLE';
+
+-- Exit psql
+\q

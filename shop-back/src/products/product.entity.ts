@@ -39,7 +39,7 @@ export class Product {
   @Column({ default: true })
   isActive!: boolean;
 
-  @Column({ type: 'json', nullable: true })
+  @Column({ type: 'jsonb', nullable: true })
   attributes!: Record<string, any>; // custom attributes like brand, weight, dimensions
 
   @ManyToOne('Category', (cat) => cat.products, {

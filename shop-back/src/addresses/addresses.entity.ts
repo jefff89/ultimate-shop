@@ -46,14 +46,14 @@ export class Address {
   @Column({ length: 100 })
   country!: string;
 
-  // @Column({
-  //   type: 'enum',
-  //   enum: ['shipping', 'billing', 'both'],
-  //   default: 'both',
-  // }) for postgress
-  @Column()
-  type!: string;
-
+  @Column({
+    type: 'enum',
+    enum: ['shipping', 'billing', 'both'],
+    default: 'both',
+  })
+  // for postgress
+  // @Column()
+  // type!: string;
   @Column({ default: false })
   isDefault!: boolean;
 

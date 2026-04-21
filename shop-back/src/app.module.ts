@@ -27,8 +27,14 @@ import { CartItem } from './carts/cart-item.entity';
   // implementing typeorm
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'db.sqlite',
+      // type: 'sqlite',
+      // database: 'db.sqlite',
+      type: 'postgres',
+      host: 'localhost', // or '127.0.0.1'
+      port: 5432, // default PostgreSQL port
+      username: 'jeff',
+      password: '1234',
+      database: 'start_nest_shop_db',
       entities: [
         User,
         Report,
