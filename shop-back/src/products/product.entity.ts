@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import type { ProductVariant } from '../product_variants/product-variant.entity';
 import type { Category } from '../categories/categories.entity';
-import type { ProductTag } from 'src/categories/categories.entity';
+import type { Tag } from 'src/tags/tags.entity';
 
 @Entity()
 @Index(['name', 'slug'])
@@ -52,13 +52,13 @@ export class Product {
   })
   variants!: ProductVariant[];
 
-  @ManyToMany('ProductTag', (tag) => tag.products)
+  @ManyToMany('Tag', (tag) => tag.products)
   @JoinTable({
     name: 'product_tags',
     joinColumn: { name: 'productId', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'tagId', referencedColumnName: 'id' },
   })
-  tags!: ProductTag[];
+  tags!: Tag[];
 
   @CreateDateColumn()
   createdAt!: Date;

@@ -3,17 +3,12 @@ POST http://localhost:3002/categories
 content-type: application/json
 
 {
-    "name": "dress",
-    "slug": "dress",
-    "description": "dress category"
-}
-
-### Create a new product tag
-POST http://localhost:3002/categories/tags
-content-type: application/json
-
-{
-    "name": "clothes"
+    "name": "watch",
+    "slug": "watch",
+    "description": "watch category",
+    "tagIds": [
+    "2e516bb8-c7d2-441b-9168-8f0f5d2e0c93"
+  ]
 }
 
 

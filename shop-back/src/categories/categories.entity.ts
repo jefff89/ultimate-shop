@@ -8,8 +8,10 @@ import {
   TreeParent,
   ManyToMany,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { Product } from 'src/products/product.entity';
+import { Tag } from 'src/tags/tags.entity';
 
 @Entity()
 @Tree('closure-table') // PostgreSQL/MySQL closure table support
@@ -35,17 +37,12 @@ export class Category {
   // products in this category
   @OneToMany('Product', (product) => product.category)
   products!: Product[];
-}
 
-// product-tag.entity.ts
-@Entity()
-export class ProductTag {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
-  @Column({ type: 'varchar', unique: true })
-  name!: string;
-
-  @ManyToMany('Product', (product) => product.tags)
-  products!: Product[];
+  @ManyToMany('Tag', (tag) => tag.categories)
+  @JoinTable({
+    name: 'category_tags',
+    joinColumn: { name: 'categoryId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tagId', referencedColumnName: 'id' },
+  })
+  tags!: Tag[];
 }

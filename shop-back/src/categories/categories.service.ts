@@ -1,5 +1,7 @@
+// categories.service.ts
 import { Injectable } from '@nestjs/common';
-import { Category, ProductTag } from './categories.entity';
+import { Category } from './categories.entity';
+import { Tag } from 'src/tags/tags.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -7,16 +9,19 @@ import { Repository } from 'typeorm';
 export class CategoriesService {
   constructor(
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
-    @InjectRepository(ProductTag)
-    private productTagRepo: Repository<ProductTag>,
+    @InjectRepository(Tag) private tagRepo: Repository<Tag>,
   ) {}
 
-  create(data: Partial<Category>) {
-    const category = this.categoryRepo.create(data);
+  async create(data: Partial<Category> & { tagIds?: string[] }) {
+    const { tagIds, ...categoryData } = data;
+
+    const category = this.categoryRepo.create(categoryData);
+
+    // Load tags if provided
+    if (tagIds && tagIds.length > 0) {
+      category.tags = await this.tagRepo.findByIds(tagIds);
+    }
+
     return this.categoryRepo.save(category);
-  }
-  createTag(name: string) {
-    const tag = this.productTagRepo.create({ name });
-    return this.productTagRepo.save(tag);
   }
 }

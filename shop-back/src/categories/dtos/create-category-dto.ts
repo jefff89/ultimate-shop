@@ -1,4 +1,5 @@
-import { IsString } from 'class-validator';
+// create-category-dto.ts
+import { IsString, IsArray, IsUUID, IsOptional } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsString()
@@ -8,5 +9,11 @@ export class CreateCategoryDto {
   slug!: string;
 
   @IsString()
-  description!: string;
+  @IsOptional()
+  description?: string;
+
+  @IsArray()
+  @IsUUID('4', { each: true })
+  @IsOptional()
+  tagIds?: string[];
 }

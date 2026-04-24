@@ -18,9 +18,11 @@ import { Address } from './addresses/addresses.entity';
 import { Order, OrderLineItem } from './orders/orders.entity';
 import { Product } from './products/product.entity';
 import { ProductVariant } from './product_variants/product-variant.entity';
-import { Category, ProductTag } from './categories/categories.entity';
+import { Category } from './categories/categories.entity';
 import { Cart } from './carts/carts.entity';
 import { CartItem } from './carts/cart-item.entity';
+import { TagsModule } from './tags/tags.module';
+import { Tag } from './tags/tags.entity';
 // import cookieSession from 'cookie-session';
 
 @Module({
@@ -45,7 +47,7 @@ import { CartItem } from './carts/cart-item.entity';
         Product,
         ProductVariant,
         Category,
-        ProductTag,
+        Tag,
         Cart,
         CartItem,
       ], // Connect the entity to the root connection
@@ -60,6 +62,7 @@ import { CartItem } from './carts/cart-item.entity';
     CartsModule,
     OrdersModule,
     AddressesModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

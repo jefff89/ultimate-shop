@@ -14,9 +14,9 @@ content-type: application/json
     "material": "Leather & Mesh",
     "weight_grams": 380
   },
-  "categoryId": "80ddeaf0-f396-4ed7-a252-74254e09b130",
+  "categoryId": "2ea98950-f179-4ac1-8166-9c5b626f3f67",
   "tagIds": [
-    "8c5de362-e60e-4de3-9138-afe169cde518"
+    "f9a52eff-eb42-4eb6-897c-b9927b85b075"
   ]
 }
 

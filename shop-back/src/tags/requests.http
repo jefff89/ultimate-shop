@@ -1,0 +1,9 @@
+### Create a new tag
+POST http://localhost:3002/tags
+content-type: application/json
+
+{
+    "name": "summer"
+}
+
+
