@@ -39,16 +39,16 @@ export class Product {
   @Column({ default: true })
   isActive!: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
-  attributes!: Record<string, any>; // custom attributes like brand, weight, dimensions
+  @Column({ type: 'jsonb', nullable: true }) // custom attributes like brand, weight, dimensions
+  attributes!: Record<string, any>; // Represents an object with string keys and values of any type.
 
   @ManyToOne('Category', (cat) => cat.products, {
-    eager: false,
+    eager: false, // When loading a Product, do not automatically load the related Category. You must use relations or leftJoinAndSelect to fetch it.
   })
   category!: Category;
 
   @OneToMany('ProductVariant', (variant) => variant.product, {
-    cascade: true,
+    cascade: true, // When you save/remove a Product, automatically save/remove its related ProductVariant records. No need to manually call save on each variant.
   })
   variants!: ProductVariant[];
 

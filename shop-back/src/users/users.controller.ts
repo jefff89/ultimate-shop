@@ -27,7 +27,7 @@ import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Controller('auth')
-// @Serialize(UserDto) // interceptor for sending requested response out without password included applied to all controller routes
+@Serialize(UserDto) // interceptor for sending requested response out without password included applied to all controller routes
 export class UsersController {
   constructor(
     private usersService: UsersService,
