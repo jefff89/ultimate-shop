@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
 import { Button } from '../../../components/ui/button'
 
 import {
@@ -20,10 +21,13 @@ import {
 import { signin } from '../../data/signin'
 import type { SignInFormValues } from '@/data/signin'
 import { signInSchema } from '@/data/signin'
+import { WHOAMI_QUERY_KEY } from '@/data/getSignedInUserId'
 
 export default function SignInPopover() {
   const [open, setOpen] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -34,6 +38,7 @@ export default function SignInPopover() {
   })
 
   const onSubmit = async (values: SignInFormValues) => {
+    setError(null)
     const res = await signin({
       data: {
         email: values.email,
@@ -42,15 +47,32 @@ export default function SignInPopover() {
     })
     if (res.ok) {
       setOpen(false)
-      await router.invalidate() // refreshes context.user everywhere,once
-      // router.navigate({ to: '/' })
+      // Evict (not just invalidate) the cached whoami: ensureQueryData in the
+      // root beforeLoad only checks time-based staleness, so an invalidated-but-
+      // fresh entry would be reused. removeQueries forces the re-run beforeLoad
+      // to refetch and pick up the new session.
+      queryClient.removeQueries({ queryKey: WHOAMI_QUERY_KEY })
+      await router.invalidate()
     } else {
-      throw new Error(res.statusText)
+      // Surface failures (bad credentials, forbidden origin) to the user
+      // instead of throwing into RHF's handler, which renders nothing.
+      // Backend returns 400 ("bad password") / 401 for invalid credentials.
+      setError(
+        res.status === 400 || res.status === 401
+          ? 'Invalid email or password.'
+          : 'Sign in failed. Please try again.',
+      )
     }
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next)
+        setError(null)
+      }}
+    >
       <PopoverTrigger asChild>
         <Button variant="outline" className="text-chart-3">
           Sign In
@@ -83,6 +105,10 @@ export default function SignInPopover() {
                 </FormItem>
               )}
             />
+
+            {error && (
+              <p className="text-sm font-medium text-destructive">{error}</p>
+            )}
 
             <Button type="submit" className="w-full">
               Sign In

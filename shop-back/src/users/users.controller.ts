@@ -45,8 +45,10 @@ export class UsersController {
   // }
   @Get('/whoami')
   @UseGuards(JwtAuthGuard) // this is for jwt method of authentication
-  whoAmI(@CurrentUser() userId) {
-    return userId.userId;
+  whoAmI(@CurrentUser() user: { userId: string }) {
+    // Return clean JSON so the frontend can res.json() directly.
+    // @Serialize(UserDto) exposes `id` and strips the absent `email`.
+    return { id: user.userId };
   }
 
   @Post('/signout')

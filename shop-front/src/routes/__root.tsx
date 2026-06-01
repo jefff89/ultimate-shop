@@ -10,7 +10,7 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import AiDevtools from '../lib/ai-devtools'
 import appCss from '../styles.css?url'
 import type { QueryClient } from '@tanstack/react-query'
-import { getSignedInUserId } from '@/data/getSignedInUserId'
+import { WHOAMI_QUERY_KEY, getSignedInUserId } from '@/data/getSignedInUserId'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -22,8 +22,16 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <div className="text-3xl text-center py-10">Oops! Page not found</div>
     )
   },
-  beforeLoad: async () => {
-    const user = await getSignedInUserId()
+  // beforeLoad re-runs on every navigation (and every hover-preload because of
+  // `defaultPreload: 'intent'`). Going through the QueryClient cache means all
+  // those runs reuse one result instead of hitting /auth/whoami each time — the
+  // backend is only called when the cache is stale or sign in/out invalidates it.
+  beforeLoad: async ({ context }) => {
+    const user = await context.queryClient.ensureQueryData({
+      queryKey: WHOAMI_QUERY_KEY,
+      queryFn: () => getSignedInUserId(),
+      staleTime: 5 * 60 * 1000, // treat the session as fresh for 5 minutes
+    })
     return { user }
   },
   head: () => ({

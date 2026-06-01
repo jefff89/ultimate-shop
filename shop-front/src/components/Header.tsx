@@ -3,11 +3,13 @@ import { Link, useRouteContext } from '@tanstack/react-router'
 import SignInPopover from 'src/components/auth/Signin'
 import SignoutButton from 'src/components/auth/Signout'
 import { Home, Menu, X } from 'lucide-react'
-import TanChatAIAssistant from './demo-AIAssistant.tsx'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
-  const { user } = useRouteContext('/')
+  // `user` is set by the root route's beforeLoad, so read it from the root
+  // match (`__root__`) — it's active on every page. Using `from: '/'` would
+  // crash on routes where the index route isn't matched (e.g. /dashboard).
+  const { user } = useRouteContext({ from: '__root__' })
   const isSignedIn = Boolean(user)
 
   return (
@@ -61,10 +63,6 @@ export default function Header() {
             <span className="font-medium">Home</span>
           </Link>
         </nav>
-
-        <div className="p-4 border-t border-gray-700 bg-gray-800 flex flex-col gap-2">
-          <TanChatAIAssistant />
-        </div>
       </aside>
     </>
   )
