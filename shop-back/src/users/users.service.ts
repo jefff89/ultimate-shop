@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
+import { hashPassword } from './auth/password.util';
 @Injectable()
 export class UsersService {
   //   repo: Repository<User>;
@@ -19,7 +20,7 @@ export class UsersService {
     // save method saves that instance in the database
     return this.repo.save(user);
   }
-  findOne(id: number) {
+  findOne(id: string) {
     if (!id) {
       return null;
     }
@@ -30,11 +31,15 @@ export class UsersService {
     return this.repo.find({ where: { email } });
   }
 
-  async update(id: number, attrs: Partial<User>) {
+  async update(id: string, attrs: Partial<User>) {
     // extra trip to the database
     const user = await this.findOne(id);
     if (!user) {
       throw new NotFoundException('user not found');
+    }
+    // Never persist a raw password: hash it the same way signup does.
+    if (attrs.password) {
+      attrs = { ...attrs, password: await hashPassword(attrs.password) };
     }
     Object.assign(user, attrs);
 
@@ -42,7 +47,7 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     // extra trip to the database
     const user = await this.findOne(id);
     if (!user) {

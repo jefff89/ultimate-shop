@@ -40,20 +40,20 @@ export class User {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany('Address', (address) => address.user)
+  @OneToMany('Address', (address: Address) => address.user)
   addresses!: Address[];
 
-  @OneToMany('Cart', (cart) => cart.user)
+  @OneToMany('Cart', (cart: Cart) => cart.user)
   carts!: Cart[];
 
-  @OneToMany('Order', (order) => order.user)
+  @OneToMany('Order', (order: Order) => order.user)
   orders!: Order[];
 
-  @OneToMany('Report', (report) => report.user)
+  @OneToMany('Report', (report: Report) => report.user)
   reports!: Report[];
 
   // ✅ FIX: wrap Role in forwardRef to break circular dependency
-  @ManyToMany('Role', (role) => role.users, {
+  @ManyToMany('Role', (role: Role) => role.users, {
     cascade: true,
     eager: true,
   })

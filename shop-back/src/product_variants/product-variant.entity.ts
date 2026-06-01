@@ -37,7 +37,7 @@ export class ProductVariant {
   @Column({ default: true })
   isActive!: boolean;
 
-  @ManyToOne('Product', (product) => product.variants, {
+  @ManyToOne('Product', (product: Product) => product.variants, {
     onDelete: 'CASCADE',
   })
   product!: Product;

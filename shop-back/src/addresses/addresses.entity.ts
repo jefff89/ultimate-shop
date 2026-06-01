@@ -14,7 +14,7 @@ export class Address {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToOne('User', (user) => user.addresses, {
+  @ManyToOne('User', (user: User) => user.addresses, {
     onDelete: 'CASCADE',
   })
   user!: User; // which user owns this address

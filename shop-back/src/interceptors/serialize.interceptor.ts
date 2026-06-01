@@ -19,17 +19,17 @@ export function Serialize(dto: ClassConstructor) {
 
 // our interceptor
 export class SerializeInterceptor implements NestInterceptor {
-  constructor(private dto: any) {}
+  constructor(private dto: ClassConstructor) {}
 
   intercept(
     context: ExecutionContext,
-    handler: CallHandler<any>,
-  ): Observable<any> | Promise<Observable<any>> {
+    handler: CallHandler<unknown>,
+  ): Observable<unknown> | Promise<Observable<unknown>> {
     // Run something before a request is handled by the request handler
     // console.log('Im running before the handler', context);
 
     return handler.handle().pipe(
-      map((data: any) => {
+      map((data: unknown) => {
         // Run something before the response is sent out
         // console.log('Im running before response is sent out', data);
 

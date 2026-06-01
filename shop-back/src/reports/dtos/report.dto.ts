@@ -1,4 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
+import type { Report } from '../report.entity';
 
 export class ReportDto {
   @Expose()
@@ -28,7 +29,7 @@ export class ReportDto {
   @Expose()
   approved!: boolean;
 
-  @Transform(({ obj }) => obj.user.id) // obj is the original report entity with user information in it, we only need user id, so we extract it and put it into the userId column
+  @Transform(({ obj }: { obj: Report }) => obj.user.id) // obj is the original report entity with user information in it, we only need user id, so we extract it and put it into the userId column
   @Expose()
   userId!: string;
 }

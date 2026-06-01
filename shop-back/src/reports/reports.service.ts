@@ -9,9 +9,11 @@ import { GetEstimateDto } from './dtos/get-estimate.dto';
 export class ReportsService {
   constructor(@InjectRepository(Report) private repo: Repository<Report>) {}
 
-  async create(reportDto: CreateReportDto, user: User): Promise<Report> {
+  async create(reportDto: CreateReportDto, userId: string): Promise<Report> {
     const report = this.repo.create(reportDto);
-    report.user = user;
+    // Attach ownership by id (the authenticated principal only carries the id,
+    // not a full User entity). TypeORM persists this as the FK.
+    report.user = { id: userId } as User;
     return this.repo.save(report);
   }
 

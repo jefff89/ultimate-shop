@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
 import { Tag } from 'src/tags/tags.entity';
@@ -22,7 +22,11 @@ export class ProductsService {
 
     // Load category if provided
     if (categoryId) {
-      product.category = await this.categoryRepo.findOneBy({ id: categoryId });
+      const category = await this.categoryRepo.findOneBy({ id: categoryId });
+      if (!category) {
+        throw new NotFoundException('category not found');
+      }
+      product.category = category;
     }
 
     // Load tags if provided

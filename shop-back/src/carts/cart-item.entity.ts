@@ -32,7 +32,7 @@ export class CartItem {
   @Column({ type: 'uuid' })
   cartId!: string;
 
-  @ManyToOne('Cart', (cart) => cart.items, {
+  @ManyToOne('Cart', (cart: Cart) => cart.items, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'cartId' })

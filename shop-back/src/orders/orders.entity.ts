@@ -60,7 +60,7 @@ export class Order {
   @Column({ type: 'varchar', nullable: true })
   trackingNumber!: string;
 
-  @OneToMany('OrderLineItem', (lineItem) => lineItem.order, {
+  @OneToMany('OrderLineItem', (lineItem: OrderLineItem) => lineItem.order, {
     cascade: true,
   })
   lineItems!: OrderLineItem[];

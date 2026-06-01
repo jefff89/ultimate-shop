@@ -35,10 +35,10 @@ export class Category {
   parent!: Category;
 
   // products in this category
-  @OneToMany('Product', (product) => product.category)
+  @OneToMany('Product', (product: Product) => product.category)
   products!: Product[];
 
-  @ManyToMany('Tag', (tag) => tag.categories)
+  @ManyToMany('Tag', (tag: Tag) => tag.categories)
   @JoinTable({
     name: 'category_tags',
     joinColumn: { name: 'categoryId', referencedColumnName: 'id' },

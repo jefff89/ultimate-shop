@@ -32,7 +32,7 @@ export class Report {
   mileage!: number;
 
   // @ManyToOne(() => User, (user) => user.reports)
-  @ManyToOne('User', (user) => user.reports)
+  @ManyToOne('User', (user: User) => user.reports)
   user!: User;
 }
 

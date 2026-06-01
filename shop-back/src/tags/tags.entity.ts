@@ -10,9 +10,9 @@ export class Tag {
   @Column({ type: 'varchar', unique: true })
   name!: string;
 
-  @ManyToMany('Product', (product) => product.tags)
+  @ManyToMany('Product', (product: Product) => product.tags)
   products!: Product[];
 
-  @ManyToMany('Category', (category) => category.tags)
+  @ManyToMany('Category', (category: Category) => category.tags)
   categories!: Category[];
 }
