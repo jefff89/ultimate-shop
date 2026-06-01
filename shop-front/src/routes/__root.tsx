@@ -8,7 +8,6 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import Header from '../components/Header'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import AiDevtools from '../lib/ai-devtools'
-import StoreDevtools from '../lib/demo-store-devtools'
 import appCss from '../styles.css?url'
 import type { QueryClient } from '@tanstack/react-query'
 import { getSignedInUserId } from '@/data/getSignedInUserId'
@@ -23,10 +22,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <div className="text-3xl text-center py-10">Oops! Page not found</div>
     )
   },
-  // this beforLoad method will run before the app is loaded
   beforeLoad: async () => {
-    const userId = await getSignedInUserId()
-    return { userId } // now throughout the whole routes this userId is available
+    const user = await getSignedInUserId()
+    return { user }
   },
   head: () => ({
     meta: [
@@ -61,20 +59,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <Header />
         {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-            TanStackQueryDevtools,
-            AiDevtools,
-            StoreDevtools,
-          ]}
-        />
+        {import.meta.env.DEV && (
+          <TanStackDevtools
+            config={{
+              position: 'bottom-right',
+            }}
+            plugins={[
+              {
+                name: 'Tanstack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+              TanStackQueryDevtools,
+              AiDevtools,
+            ]}
+          />
+        )}
         <Scripts />
       </body>
     </html>

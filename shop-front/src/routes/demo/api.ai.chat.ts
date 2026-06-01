@@ -5,6 +5,8 @@ import { openaiText } from '@tanstack/ai-openai'
 import { geminiText } from '@tanstack/ai-gemini'
 import { ollamaText } from '@tanstack/ai-ollama'
 
+import { fetchUserFromRequest } from '@/data/getSignedInUserId'
+import { forbiddenOriginResponse, isOriginAllowed } from '@/utils/csrf'
 import { getGuitars, recommendGuitarToolDef } from '@/lib/demo-guitar-tools'
 
 const SYSTEM_PROMPT = `You are a helpful assistant for a store that sells guitars.
@@ -24,16 +26,68 @@ IMPORTANT:
 - Do NOT describe the guitar yourself - let the recommendGuitar tool do it
 `
 
+// Per-user in-memory rate limiter: 20 requests / 60s. Replace with Redis in prod (multi-instance).
+const RATE_WINDOW_MS = 60_000
+const RATE_LIMIT = 20
+const rateBuckets = new Map<string, { count: number; windowStart: number }>()
+let lastSweep = Date.now()
+
+// Evict expired buckets so the map stays bounded by active-users-per-window
+// instead of growing once per user that ever hit the endpoint.
+function sweepExpired(now: number) {
+  if (now - lastSweep < RATE_WINDOW_MS) return
+  lastSweep = now
+  for (const [key, bucket] of rateBuckets) {
+    if (now - bucket.windowStart >= RATE_WINDOW_MS) rateBuckets.delete(key)
+  }
+}
+
+function rateLimit(
+  userId: string,
+): { ok: true } | { ok: false; retryAfter: number } {
+  const now = Date.now()
+  sweepExpired(now)
+  const bucket = rateBuckets.get(userId)
+  if (!bucket || now - bucket.windowStart >= RATE_WINDOW_MS) {
+    rateBuckets.set(userId, { count: 1, windowStart: now })
+    return { ok: true }
+  }
+  if (bucket.count >= RATE_LIMIT) {
+    const retryAfter = Math.ceil(
+      (RATE_WINDOW_MS - (now - bucket.windowStart)) / 1000,
+    )
+    return { ok: false, retryAfter }
+  }
+  bucket.count += 1
+  return { ok: true }
+}
+
 export const Route = createFileRoute('/demo/api/ai/chat')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        // Capture request signal before reading body (it may be aborted after body is consumed)
         const requestSignal = request.signal
+        if (requestSignal.aborted) return new Response(null, { status: 499 })
 
-        // If request is already aborted, return early
-        if (requestSignal.aborted) {
-          return new Response(null, { status: 499 }) // 499 = Client Closed Request
+        if (!isOriginAllowed(request)) return forbiddenOriginResponse()
+
+        const user = await fetchUserFromRequest(request)
+        if (!user) {
+          return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+          })
+        }
+
+        const limit = rateLimit(user.id)
+        if (!limit.ok) {
+          return new Response(JSON.stringify({ error: 'Too Many Requests' }), {
+            status: 429,
+            headers: {
+              'Content-Type': 'application/json',
+              'Retry-After': String(limit.retryAfter),
+            },
+          })
         }
 
         const abortController = new AbortController()
@@ -42,7 +96,6 @@ export const Route = createFileRoute('/demo/api/ai/chat')({
           const body = await request.json()
           const { messages } = body
 
-          // Determine the best available provider
           let provider: string = 'ollama'
           let model: string = 'mistral:7b'
           if (process.env.ANTHROPIC_API_KEY) {
@@ -56,7 +109,6 @@ export const Route = createFileRoute('/demo/api/ai/chat')({
             model = 'gemini-2.0-flash-exp'
           }
 
-          // Adapter factory pattern for multi-vendor support
           const adapterConfig = {
             anthropic: () =>
               anthropicText((model || 'claude-haiku-4-5') as any),
@@ -69,10 +121,7 @@ export const Route = createFileRoute('/demo/api/ai/chat')({
 
           const stream = chat({
             adapter,
-            tools: [
-              getGuitars, // Server tool
-              recommendGuitarToolDef, // No server execute - client will handle
-            ],
+            tools: [getGuitars, recommendGuitarToolDef],
             systemPrompts: [SYSTEM_PROMPT],
             agentLoopStrategy: maxIterations(5),
             messages,
@@ -81,9 +130,8 @@ export const Route = createFileRoute('/demo/api/ai/chat')({
 
           return toServerSentEventsResponse(stream, { abortController })
         } catch (error: any) {
-          // If request was aborted, return early (don't send error response)
           if (error.name === 'AbortError' || abortController.signal.aborted) {
-            return new Response(null, { status: 499 }) // 499 = Client Closed Request
+            return new Response(null, { status: 499 })
           }
           return new Response(
             JSON.stringify({ error: 'Failed to process chat request' }),

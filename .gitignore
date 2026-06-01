@@ -40,6 +40,13 @@ bun.lockb
 /shop-front/.next
 /shop-front/out
 
+# --- Playwright ---
+.playwright-mcp/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
 # --- Logs ---
 npm-debug.log*
 yarn-debug.log*

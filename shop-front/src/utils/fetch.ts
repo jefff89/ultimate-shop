@@ -1,25 +1,38 @@
-const getHeaders = (request) => ({
-  Cookie: request?.headers?.get('cookie'),
-})
-
-export const post = async (path: string, formData: FormData, req) => {
-  const res = await fetch(`${process.env.API_URL}/${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(req) },
-    // headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
-  })
-  return res
-  //   const parsedRes = await res.json()
-  //   if (!res.ok) {
-  //     return { error: getParseErrorMessage(parsedRes) }
-  //   }
-  //   return { error: '' }
+const apiUrl = () => {
+  const url = process.env.API_URL
+  if (!url) {
+    // Fail loudly: an empty base would make every call a relative URL that
+    // throws on the server and gets silently swallowed, surfacing only as
+    // "everyone is logged out" with no diagnostic.
+    throw new Error('API_URL is not set — the backend base URL is required.')
+  }
+  return url
 }
 
-export const get = async (path: string, req) => {
-  const res = await fetch(`${process.env.API_URL}/${path}`, {
-    headers: { ...getHeaders(req) },
+const cookieHeader = (
+  req: Request | null | undefined,
+): Record<string, string> => {
+  const cookie = req?.headers.get('cookie')
+  return cookie ? { cookie } : {}
+}
+
+export async function get(
+  path: string,
+  req: Request | null | undefined,
+): Promise<Response> {
+  return fetch(`${apiUrl()}/${path}`, {
+    headers: { ...cookieHeader(req) },
   })
-  return res.json()
+}
+
+export async function post(
+  path: string,
+  body: unknown,
+  req: Request | null | undefined,
+): Promise<Response> {
+  return fetch(`${apiUrl()}/${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...cookieHeader(req) },
+    body: JSON.stringify(body),
+  })
 }

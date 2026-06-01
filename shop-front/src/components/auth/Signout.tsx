@@ -7,7 +7,9 @@ export default function SignoutButton() {
 
   const handleSignout = async () => {
     const res = await signout()
-    if (res.ok) router.navigate('/')
+    if (res.ok) {
+      await router.invalidate()
+    }
   }
   return (
     <Button variant="outline" className="text-chart-3" onClick={handleSignout}>

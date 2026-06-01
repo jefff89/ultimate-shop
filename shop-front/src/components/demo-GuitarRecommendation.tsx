@@ -1,5 +1,6 @@
 import { useNavigate } from '@tanstack/react-router'
 
+import SafeImage from './SafeImage'
 import { showAIAssistant } from './demo-AIAssistant'
 
 import guitars from '@/data/demo-guitars'
@@ -13,7 +14,7 @@ export default function GuitarRecommendation({ id }: { id: string }) {
   return (
     <div className="my-4 rounded-lg overflow-hidden border border-orange-500/20 bg-gray-800/50">
       <div className="aspect-[4/3] relative overflow-hidden">
-        <img
+        <SafeImage
           src={guitar.image}
           alt={guitar.name}
           className="w-full h-full object-cover"

@@ -9,9 +9,6 @@ import {
 } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
-  beforeLoad: ({ context }) => {
-    context.userId
-  },
   component: App,
 })
 
