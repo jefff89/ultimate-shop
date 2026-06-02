@@ -41,7 +41,7 @@ export class Product {
   isActive!: boolean;
 
   @Column({ type: 'text', nullable: true })
-  primaryImageUrl!: string;
+  primaryImageUrl!: string | null;
 
   @Column({ default: false })
   isFeatured!: boolean;
@@ -50,10 +50,10 @@ export class Product {
   isTrending!: boolean;
 
   @Column({ type: 'decimal', precision: 3, scale: 2, nullable: true })
-  rating!: number; // 0.00–5.00
+  rating!: number | null; // 0.00–5.00; null when unrated — Phase 6 mapper must handle
 
   @Column({ type: 'int', nullable: true })
-  reviewCount!: number;
+  reviewCount!: number | null;
 
   @Column({ type: 'jsonb', nullable: true }) // custom attributes like brand, weight, dimensions
   attributes!: Record<string, any>; // Represents an object with string keys and values of any type.
