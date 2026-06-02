@@ -41,12 +41,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Freeze shared CatalogPage<T> + CatalogProductCard Zod contract and the opaque base64 cursor codec in shared/
+- [x] 01-01-PLAN.md — Freeze shared CatalogPage<T> + CatalogProductCard Zod contract and the opaque base64 cursor codec in shared/
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [ ] 01-02-PLAN.md — Extend Product (5 additive columns + composite keyset index), adopt zod 4.x in shop-back, wire @shared/* without breaking nest build, verify live DB (synchronize)
-- [ ] 01-03-PLAN.md — Wire @shared/* into shop-front tsconfig + vite.config and prove the frontend resolves the contract
+- [x] 01-03-PLAN.md — Wire @shared/* into shop-front tsconfig + vite.config and prove the frontend resolves the contract
 
 ### Phase 2: Mock-API Layer
 
@@ -151,7 +151,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema + Shared Contract | 0/3 | Planned | - |
+| 1. Schema + Shared Contract | 2/3 | In Progress|  |
 | 2. Mock-API Layer | 0/TBD | Not started | - |
 | 3. Infinite-Scroll Grid | 0/TBD | Not started | - |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |

@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 1 context gathered
-last_updated: "2026-06-02T08:19:16.236Z"
-last_activity: 2026-06-02 — Roadmap created (7 phases, 28 requirements mapped)
+last_updated: "2026-06-02T11:21:56.465Z"
+last_activity: 2026-06-02 -- Phase 01 execution started
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 2
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-02)
 
 **Core value:** Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling homepage — and the data model behind it scales cleanly as the catalog grows.
-**Current focus:** Phase 1 — Schema + Shared Contract
+**Current focus:** Phase 01 — schema-shared-contract
 
 ## Current Position
 
-Phase: 1 of 7 (Schema + Shared Contract)
-Plan: 0 of TBD in current phase
+Phase: 01 (schema-shared-contract) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-02 — Roadmap created (7 phases, 28 requirements mapped)
+Last activity: 2026-06-02 -- Phase 01 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01 P03 | 4min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Contract-first, mock-first build — freeze `CatalogPage<T>` Zod contract in Phase 1; mock (P2-5) and real endpoint (P6) build against it in parallel; swap in P7
 - [Roadmap]: Vertical MVP — landing page visibly working on mock data by end of Phase 3; each phase an independently-valuable increment
 - [Roadmap]: Cursor pagination keys on `(createdAt DESC, id DESC)` with `id` tiebreaker (non-negotiable) on a composite `(isActive, createdAt, id)` index
+- [Phase ?]: [01-03]: shop-front declares @shared in BOTH tsconfig paths and vite resolve.alias (D-02), mirroring @/*; proved via bun --bun run build
 
 ### Pending Todos
 
@@ -87,6 +89,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-02T08:01:51.172Z
+Last session: 2026-06-02T11:21:33.611Z
 Stopped at: Phase 1 context gathered
 Resume file: .planning/phases/01-schema-shared-contract/01-CONTEXT.md

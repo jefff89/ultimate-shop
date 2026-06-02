@@ -17,8 +17,8 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 ### Contract
 
-- [ ] **CONT-01**: A single shared paginated response contract `CatalogPage<T>` (Zod) is defined once and consumed by both the mock and the real API
-- [ ] **CONT-02**: A lean `CatalogProductCard` projection defines exactly the fields a card needs (id, name, slug, price, primaryImageUrl, rating, reviewCount, flags)
+- [x] **CONT-01**: A single shared paginated response contract `CatalogPage<T>` (Zod) is defined once and consumed by both the mock and the real API
+- [x] **CONT-02**: A lean `CatalogProductCard` projection defines exactly the fields a card needs (id, name, slug, price, primaryImageUrl, rating, reviewCount, flags)
 - [ ] **CONT-03**: The pagination cursor is opaque (base64-encoded `(createdAt, id)` tuple) and leaks no database internals
 
 ### Catalog API (real backend)
@@ -109,8 +109,8 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SCHEMA-03 | Phase 1 | Pending |
 | SCHEMA-04 | Phase 1 | Pending |
 | SCHEMA-05 | Phase 1 | Pending |
-| CONT-01 | Phase 1 | Pending |
-| CONT-02 | Phase 1 | Pending |
+| CONT-01 | Phase 1 | Complete |
+| CONT-02 | Phase 1 | Complete |
 | CONT-03 | Phase 1 | Pending |
 | MOCK-01 | Phase 2 | Pending |
 | MOCK-02 | Phase 2 | Pending |
@@ -134,6 +134,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | CAT-04 | Phase 6 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 28 total
 - Mapped to phases: 28 ✓
 - Unmapped: 0
