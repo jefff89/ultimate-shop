@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 1 context gathered
-last_updated: "2026-06-02T11:21:56.465Z"
+last_updated: "2026-06-02T11:38:34.274Z"
 last_activity: 2026-06-02 -- Phase 01 execution started
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 0
+  completed_plans: 3
+  percent: 14
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-02)
 ## Current Position
 
 Phase: 01 (schema-shared-contract) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-02 -- Phase 01 execution started
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01 P03 | 4min | 2 tasks | 2 files |
+| Phase 01-schema-shared-contract P02 | 11min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,8 @@ Recent decisions affecting current work:
 - [Roadmap]: Vertical MVP — landing page visibly working on mock data by end of Phase 3; each phase an independently-valuable increment
 - [Roadmap]: Cursor pagination keys on `(createdAt DESC, id DESC)` with `id` tiebreaker (non-negotiable) on a composite `(isActive, createdAt, id)` index
 - [Phase ?]: [01-03]: shop-front declares @shared in BOTH tsconfig paths and vite resolve.alias (D-02), mirroring @/*; proved via bun --bun run build
+- [Phase ?]: [01-02]: Backend uses include-free @shared/* path alias; rootDir emit guard moved to tsconfig.build.json so nest build keeps dist/main.js top-level and base tsconfig stops flagging test/
+- [Phase ?]: [01-02]: zod@4.2.1 pinned exact in shop-back to match shop-front (D-03); shared/ bare zod import is a Phase 6 runtime-resolution follow-up (no root node_modules)
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-02T11:21:33.611Z
+Last session: 2026-06-02T11:38:26.382Z
 Stopped at: Phase 1 context gathered
 Resume file: .planning/phases/01-schema-shared-contract/01-CONTEXT.md

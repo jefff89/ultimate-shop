@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Parallelization:** Phase 1 is a strict sequential blocker. After it, the UI track (Phases 2-5) and the backend track (Phase 6) are independent and may run concurrently. Phase 7 depends on both tracks.
 
-- [ ] **Phase 1: Schema + Shared Contract** - Firm up the Product catalog schema and freeze the single `CatalogPage<T>` Zod contract + cursor codec (critical-path blocker)
+- [x] **Phase 1: Schema + Shared Contract** - Firm up the Product catalog schema and freeze the single `CatalogPage<T>` Zod contract + cursor codec (critical-path blocker) (completed 2026-06-02)
 - [ ] **Phase 2: Mock-API Layer** - In-memory cursor-paginated mock conforming to the contract behind a swappable data seam
 - [ ] **Phase 3: Infinite-Scroll Grid** - Product grid that loads pages on scroll via useInfiniteQuery + IntersectionObserver, with end/cap states
 - [ ] **Phase 4: Composed Landing Feed** - Hero + Featured/Categories/Trending rails above the grid, fetched independently of the cursor stream
@@ -45,7 +45,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — Extend Product (5 additive columns + composite keyset index), adopt zod 4.x in shop-back, wire @shared/* without breaking nest build, verify live DB (synchronize)
+- [x] 01-02-PLAN.md — Extend Product (5 additive columns + composite keyset index), adopt zod 4.x in shop-back, wire @shared/* without breaking nest build, verify live DB (synchronize)
 - [x] 01-03-PLAN.md — Wire @shared/* into shop-front tsconfig + vite.config and prove the frontend resolves the contract
 
 ### Phase 2: Mock-API Layer
@@ -151,7 +151,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema + Shared Contract | 2/3 | In Progress|  |
+| 1. Schema + Shared Contract | 3/3 | Complete   | 2026-06-02 |
 | 2. Mock-API Layer | 0/TBD | Not started | - |
 | 3. Infinite-Scroll Grid | 0/TBD | Not started | - |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |

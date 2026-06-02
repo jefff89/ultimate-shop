@@ -9,11 +9,11 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 ### Schema
 
-- [ ] **SCHEMA-01**: Product has a denormalized `primaryImageUrl` field so list cards render without joining variants
-- [ ] **SCHEMA-02**: Product has `isFeatured` and `isTrending` boolean merchandising flags to source the homepage rails
-- [ ] **SCHEMA-03**: Product has nullable `rating` and `reviewCount` fields for card star display
-- [ ] **SCHEMA-04**: Catalog relations (Product ↔ Variant ↔ Category ↔ Tag) are clean and consistent, with explicit relation loading so the list query has no N+1
-- [ ] **SCHEMA-05**: A composite index supporting keyset pagination (`isActive`, `createdAt`, `id`) exists on Product
+- [x] **SCHEMA-01**: Product has a denormalized `primaryImageUrl` field so list cards render without joining variants
+- [x] **SCHEMA-02**: Product has `isFeatured` and `isTrending` boolean merchandising flags to source the homepage rails
+- [x] **SCHEMA-03**: Product has nullable `rating` and `reviewCount` fields for card star display
+- [x] **SCHEMA-04**: Catalog relations (Product ↔ Variant ↔ Category ↔ Tag) are clean and consistent, with explicit relation loading so the list query has no N+1
+- [x] **SCHEMA-05**: A composite index supporting keyset pagination (`isActive`, `createdAt`, `id`) exists on Product
 
 ### Contract
 
@@ -104,11 +104,11 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SCHEMA-01 | Phase 1 | Pending |
-| SCHEMA-02 | Phase 1 | Pending |
-| SCHEMA-03 | Phase 1 | Pending |
-| SCHEMA-04 | Phase 1 | Pending |
-| SCHEMA-05 | Phase 1 | Pending |
+| SCHEMA-01 | Phase 1 | Complete |
+| SCHEMA-02 | Phase 1 | Complete |
+| SCHEMA-03 | Phase 1 | Complete |
+| SCHEMA-04 | Phase 1 | Complete |
+| SCHEMA-05 | Phase 1 | Complete |
 | CONT-01 | Phase 1 | Complete |
 | CONT-02 | Phase 1 | Complete |
 | CONT-03 | Phase 1 | Pending |
