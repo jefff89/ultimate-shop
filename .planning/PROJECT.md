@@ -22,13 +22,13 @@ Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling h
 - ✓ Global validation (whitelist), helmet, CORS, rate-limiting — existing (`shop-back/src/main.ts`)
 - ✓ Frontend auth flow: sign-in form, protected `_authed` layout, dashboard shell — existing (`shop-front/src/routes/`, `components/auth/`)
 - ✓ TanStack Query + server-function data fetching wired — existing (`shop-front/src/integrations/`, `data/`)
+- ✓ Catalog Product schema firmed up + single frozen shared contract — Validated in Phase 1: schema-shared-contract. Product gains `primaryImageUrl`/`isFeatured`/`isTrending`/nullable `rating`,`reviewCount` + a composite `(isActive, createdAt, id)` keyset index (live-DB verified); a single `CatalogPage<T>` Zod factory + lean 9-field `CatalogProductCard` + an opaque base64url `(createdAt,id)` cursor codec live in top-level `shared/`, alias-wired into both workspaces (`@shared/*`).
 
 ### Active
 
 <!-- This milestone. Hypotheses until shipped. -->
 
-- [ ] Firm up backend catalog entities/relations (Product ↔ Variant ↔ Category ↔ Tag) into a clean, scalable schema
-- [ ] Cursor-based pagination on the products/catalog listing endpoint (scalable for infinite scroll)
+- [ ] Cursor-based pagination on the products/catalog listing endpoint (scalable for infinite scroll) — contract + cursor codec frozen in Phase 1; the real endpoint lands in Phase 6
 - [ ] Frontend mock-API layer: paginated catalog responses that mirror the backend schema, swappable for the real API later
 - [ ] Animated landing page: composed homepage feed (featured / categories / trending sections)
 - [ ] Infinite-scroll product grid beneath the feed, lazy-loading more on scroll
@@ -89,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-02 after initialization*
+*Last updated: 2026-06-02 after Phase 1 (schema-shared-contract) completion*
