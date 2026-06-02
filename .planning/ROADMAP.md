@@ -35,7 +35,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Catalog relations (Product ↔ Variant ↔ Category ↔ Tag) load explicitly with no N+1 for the card projection
   4. A single shared `CatalogPage<T>` Zod schema and lean `CatalogProductCard` projection are defined once and importable by both the mock and the real client
   5. The pagination cursor is an opaque base64-encoded `(createdAt, id)` tuple that leaks no database internals
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 01-01-PLAN.md — Freeze shared CatalogPage<T> + CatalogProductCard Zod contract and the opaque base64 cursor codec in shared/
+- [ ] 01-02-PLAN.md — Extend Product (5 additive columns + composite keyset index), adopt zod 4.x in shop-back, wire @shared/* without breaking nest build, verify live DB (synchronize)
+- [ ] 01-03-PLAN.md — Wire @shared/* into shop-front tsconfig + vite.config and prove the frontend resolves the contract
 
 ### Phase 2: Mock-API Layer
 **Goal**: A frontend mock-API layer serves cursor-paginated catalog responses byte-compatible with the contract, behind a single swappable data seam, so UI work is fully unblocked without the backend.
@@ -122,7 +125,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema + Shared Contract | 0/TBD | Not started | - |
+| 1. Schema + Shared Contract | 0/3 | Planned | - |
 | 2. Mock-API Layer | 0/TBD | Not started | - |
 | 3. Infinite-Scroll Grid | 0/TBD | Not started | - |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |
