@@ -17,6 +17,7 @@ import type { Tag } from 'src/tags/tags.entity';
 
 @Entity()
 @Index(['name', 'slug'])
+@Index(['isActive', 'createdAt', 'id'])
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
@@ -38,6 +39,21 @@ export class Product {
 
   @Column({ default: true })
   isActive!: boolean;
+
+  @Column({ type: 'text', nullable: true })
+  primaryImageUrl!: string;
+
+  @Column({ default: false })
+  isFeatured!: boolean;
+
+  @Column({ default: false })
+  isTrending!: boolean;
+
+  @Column({ type: 'decimal', precision: 3, scale: 2, nullable: true })
+  rating!: number; // 0.00–5.00
+
+  @Column({ type: 'int', nullable: true })
+  reviewCount!: number;
 
   @Column({ type: 'jsonb', nullable: true }) // custom attributes like brand, weight, dimensions
   attributes!: Record<string, any>; // Represents an object with string keys and values of any type.
