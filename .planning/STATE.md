@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 context gathered
+stopped_at: Phase 1 complete — verified, ready for Phase 2
 last_updated: "2026-06-02T11:56:35.647Z"
 last_activity: 2026-06-02
 progress:
@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-02)
 
 **Core value:** Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling homepage — and the data model behind it scales cleanly as the catalog grows.
-**Current focus:** Phase 01 — schema-shared-contract
+**Current focus:** Phase 02 — mock-api-layer
 
 ## Current Position
 
