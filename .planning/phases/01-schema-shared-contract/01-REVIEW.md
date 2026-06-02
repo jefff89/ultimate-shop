@@ -18,7 +18,19 @@ findings:
   info: 3
   total: 8
 status: issues_found
+resolved:
+  - CR-01  # fixed in 5d72d7e — cursor codec now emits base64url + regression tests
+  - WR-01  # fixed in aff3401 — nullable Product columns typed `| null`
+open_after_fix:
+  warning: 3   # WR-02, WR-03, WR-04 (latent alias/build hygiene — addressed in their relevant later phases)
+  info: 3      # IN-01, IN-02, IN-03 (informational)
 ---
+
+> **Resolution (2026-06-02):** CR-01 (critical) and WR-01 (warning) were fixed
+> immediately after review — see commits `5d72d7e` and `aff3401`. The remaining
+> WR-02/03/04 are latent alias/build-wiring items that activate only when a backend
+> file first imports `@shared` (Phase 6) and when frontend type-checking is extended;
+> they are deferred to those phases. IN-01/02/03 are informational.
 
 # Phase 01: Code Review Report
 
