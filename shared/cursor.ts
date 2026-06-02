@@ -34,9 +34,27 @@ export class InvalidCursorError extends Error {
   }
 }
 
+/**
+ * base64url (RFC 4648 §5) helpers. The cursor rides verbatim inside the contract's
+ * `nextCursor` URL query param, so it MUST be URL-safe. Standard base64 is NOT:
+ * `+` is decoded to a space by application/x-www-form-urlencoded query parsers,
+ * and `=`/`/` are ambiguous/path-significant — any of which silently corrupts a
+ * round-tripped cursor and breaks pagination. Since this codec is imported
+ * byte-identically by the mock (Phase 2) and the real backend (Phase 6), the
+ * encoding must be URL-safe at the source.
+ */
+function toBase64Url(s: string): string {
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+function fromBase64Url(s: string): string {
+  const pad = s.length % 4 === 0 ? '' : '='.repeat(4 - (s.length % 4))
+  return atob(s.replace(/-/g, '+').replace(/_/g, '/') + pad)
+}
+
 export function encodeCursor(tuple: CursorTuple): string {
   const json = JSON.stringify({ createdAt: tuple.createdAt, id: tuple.id })
-  return btoa(encodeURIComponent(json))
+  return toBase64Url(encodeURIComponent(json))
 }
 
 /**
@@ -52,7 +70,7 @@ export function decodeCursor(cursor: string): CursorTuple {
 
   let json: string
   try {
-    json = decodeURIComponent(atob(cursor))
+    json = decodeURIComponent(fromBase64Url(cursor))
   } catch {
     throw new InvalidCursorError('cursor is not valid base64')
   }

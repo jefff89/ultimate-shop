@@ -21,6 +21,19 @@ describe('cursor codec', () => {
     expect(encoded).not.toContain(tuple.createdAt)
   })
 
+  it('emits URL-safe base64url only (no +, /, or = padding)', () => {
+    // The cursor rides in a URL query param; standard base64 (`+` `/` `=`) corrupts
+    // in transit. Assert the encoding stays within the base64url alphabet.
+    expect(encodeCursor(tuple)).toMatch(/^[A-Za-z0-9_-]+$/)
+    // A single-character id is the case standard base64 would pad with `==`.
+    expect(encodeCursor({ createdAt: tuple.createdAt, id: 'x' })).toMatch(/^[A-Za-z0-9_-]+$/)
+  })
+
+  it('round-trips a single-character id (the standard-base64 padding case)', () => {
+    const short = { createdAt: tuple.createdAt, id: 'x' }
+    expect(decodeCursor(encodeCursor(short))).toEqual(short)
+  })
+
   it('throws on non-base64 / garbage input', () => {
     expect(() => decodeCursor('!!!not base64 at all!!!')).toThrow()
     expect(() => decodeCursor('')).toThrow()
