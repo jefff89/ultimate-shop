@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 1 context gathered
-last_updated: "2026-06-03T09:55:01.086Z"
-last_activity: 2026-06-03 -- Phase 03 execution started
+last_updated: "2026-06-03T14:10:00.000Z"
+last_activity: 2026-06-03 -- Phase 03 wave 2 (03-02) code complete; human-verify deferred
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 7
-  completed_plans: 5
-  percent: 29
+  completed_plans: 7
+  percent: 43
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-02)
 ## Current Position
 
 Phase: 03 (infinite-scroll-grid) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 03
-Last activity: 2026-06-03 -- Phase 03 execution started
+Plan: 2 of 2 (code complete)
+Status: Phase 03 code complete — live human-verify (UAT) of the scrolling page deferred/pending
+Last activity: 2026-06-03 -- Phase 03 wave 2 (03-02) code complete; human-verify deferred
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [████░░░░░░] 43%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01 P03 | 4min | 2 tasks | 2 files |
 | Phase 01-schema-shared-contract P02 | 11min | 2 tasks | 5 files |
+| Phase 03 P02 | ~25min | 2 tasks (+1 deferred checkpoint) | 5 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [01-03]: shop-front declares @shared in BOTH tsconfig paths and vite resolve.alias (D-02), mirroring @/*; proved via bun --bun run build
 - [Phase ?]: [01-02]: Backend uses include-free @shared/* path alias; rootDir emit guard moved to tsconfig.build.json so nest build keeps dist/main.js top-level and base tsconfig stops flagging test/
 - [Phase ?]: [01-02]: zod@4.2.1 pinned exact in shop-back to match shop-front (D-03); shared/ bare zod import is a Phase 6 runtime-resolution follow-up (no root node_modules)
+- [Phase 3]: [03-02]: Landing route `/` loader server-prefetches page 1 via the shared catalogInfiniteQueryOptions() factory; identical queryKey makes hydration satisfy the client query (no duplicate page-1 refetch). SSR dehydrate/hydrate automatic via setupRouterSsrQueryIntegration
+- [Phase 3]: [03-02]: vite.config.ts aliases `zod` to shop-front's installed copy so the externally-rooted shared/ contract's bare zod import resolves at production build time — build-time half of the Phase 1 follow-up, no new dependency
 
 ### Pending Todos
 
@@ -82,6 +85,7 @@ None yet.
 
 - [Phase 3/6 research flag]: TanStack Start RC SSR — `prefetchInfiniteQuery` in route loader + `createServerFn` shape must be re-verified against installed `node_modules/@tanstack/*` `.d.ts` (or context7) before implementing. Highest-risk integration; do not rely on training data.
 - [Phase 7 gap]: `@/utils/fetch` `get()` does not forward query strings; `catalog.real.ts` needs `get('products?cursor=&limit=')` — scope a minor signature tweak in Phase 6 or 7.
+- [Phase 3 pending UAT]: 03-02's blocking human-verify checkpoint (live scrolling page at http://localhost:3001/) was DEFERRED, not approved. Automated checks are green (21/21 tests, build passes) but the live visual confirmation (immediate render, no duplicate page-1 fetch on hard reload, exactly-once paging per boundary, maxPages:6 cap in devtools, end-of-list state) is outstanding. Run `cd shop-front && bun --bun run dev` (port 3001, backend not required) and follow the steps in 03-02-SUMMARY before declaring Phase 3 fully done.
 
 ## Deferred Items
 
@@ -93,6 +97,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-02T11:38:26.382Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-schema-shared-contract/01-CONTEXT.md
+Last session: 2026-06-03T14:10:00.000Z
+Stopped at: Completed 03-02-PLAN.md code tasks; human-verify checkpoint deferred (pending live UAT)
+Resume file: .planning/phases/03-infinite-scroll-grid/03-02-SUMMARY.md
