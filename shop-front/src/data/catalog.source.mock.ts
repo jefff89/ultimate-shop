@@ -101,6 +101,17 @@ function toCard(row: RawProduct): CatalogProductCard {
 }
 
 /**
+ * TEST-ONLY: the canonical (createdAt DESC, id DESC) sort keys, in order. Lets
+ * the test suite assert timestamp-collision existence and the id tiebreaker
+ * against a clean projection of the sort keys without reaching into private
+ * state. NOT re-exported from the seam (`catalog.ts`) — never imported by UI.
+ */
+export const __sortedRowsForTest: ReadonlyArray<{
+  createdAt: string
+  id: string
+}> = PRODUCTS.map((row) => ({ createdAt: row.createdAt, id: row.id }))
+
+/**
  * The cross-phase seam contract (RESEARCH A4). Phase 3's useInfiniteQuery and
  * Phase 7's real client both code against this exact signature — do NOT add
  * latencyMs or page-size parameters here.

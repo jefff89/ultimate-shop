@@ -1,10 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { CatalogProductCardPageSchema } from '@shared/catalog.contract'
 import { encodeCursor } from '@shared/cursor'
-import {
-  __sortedRowsForTest,
-  fetchCatalogPage,
-} from './catalog.source.mock'
+import { __sortedRowsForTest, fetchCatalogPage } from './catalog.source.mock'
 import { fetchCatalogPage as fetchCatalogPageFromSeam } from './catalog'
 import type { CatalogProductCard } from '@shared/catalog.contract'
 
@@ -183,7 +180,8 @@ describe('catalog.source.mock fetchCatalogPage', () => {
       let j = i
       while (
         j + 1 < __sortedRowsForTest.length &&
-        __sortedRowsForTest[j + 1].createdAt === __sortedRowsForTest[i].createdAt
+        __sortedRowsForTest[j + 1].createdAt ===
+          __sortedRowsForTest[i].createdAt
       ) {
         j++
       }
