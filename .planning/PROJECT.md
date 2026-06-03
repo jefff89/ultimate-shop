@@ -24,14 +24,14 @@ Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling h
 - ✓ TanStack Query + server-function data fetching wired — existing (`shop-front/src/integrations/`, `data/`)
 - ✓ Catalog Product schema firmed up + single frozen shared contract — Validated in Phase 1: schema-shared-contract. Product gains `primaryImageUrl`/`isFeatured`/`isTrending`/nullable `rating`,`reviewCount` + a composite `(isActive, createdAt, id)` keyset index (live-DB verified); a single `CatalogPage<T>` Zod factory + lean 9-field `CatalogProductCard` + an opaque base64url `(createdAt,id)` cursor codec live in top-level `shared/`, alias-wired into both workspaces (`@shared/*`).
 - ✓ Frontend mock-API layer: paginated catalog responses that mirror the backend schema, swappable for the real API later — Validated in Phase 2: mock-api-layer (MOCK-01/02/03). A seeded 240-product in-memory dataset + keyset-slice `fetchCatalogPage` returns `CatalogPage<CatalogProductCard>` pages that `CatalogProductCardPageSchema.parse` at the seam (byte-compatible with the Phase 1 contract), enforcing `(createdAt DESC, id DESC)` + opaque-cursor semantics via `@shared/cursor`. The active source sits behind one swappable seam (`shop-front/src/data/catalog.ts`) so the Phase 7 real-API swap is a one-line re-export. 10 Vitest tests cover full-traversal/tiebreaker/tamper/determinism/variety/seam + non-finite limit guards.
+- ✓ Infinite-scroll product grid on the landing page — Validated in Phase 3: infinite-scroll-grid (GRID-01/02/03/04). A shared `catalogInfiniteQueryOptions()` factory drives both an SSR route `loader` (server-prefetch of page 1, no duplicate refetch after hydration) and a client `ProductGrid` using `useInfiniteQuery` + an IntersectionObserver sentinel with a synchronous in-flight latch (fires exactly once per boundary). `ProductCard` renders image/name/price/rating; retained pages cap at `maxPages: 6`; an explicit `EndOfList` terminal state shows at catalog exhaustion (no infinite spinner). 21 Vitest tests + build green; live page human-verified. Known follow-up: no distinct error/empty state yet (the end-of-list branch also covers those) — see `03-REVIEW.md` WR-01/03/04/05, relevant when the Phase 6 real endpoint and failure paths arrive.
 
 ### Active
 
 <!-- This milestone. Hypotheses until shipped. -->
 
 - [ ] Cursor-based pagination on the products/catalog listing endpoint (scalable for infinite scroll) — contract + cursor codec frozen in Phase 1; the real endpoint lands in Phase 6
-- [ ] Animated landing page: composed homepage feed (featured / categories / trending sections)
-- [ ] Infinite-scroll product grid beneath the feed, lazy-loading more on scroll
+- [ ] Animated landing page: composed homepage feed (featured / categories / trending sections) — Phase 4 composes this feed above the Phase 3 grid
 - [ ] Minimal, smooth motion: lazy-load fade-ins, skeleton/loading states, tasteful card hover
 - [ ] Lazy-loaded images with graceful loading/fallback states
 
@@ -89,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-03 after Phase 2 (mock-api-layer) completion*
+*Last updated: 2026-06-03 after Phase 3 (infinite-scroll-grid) completion*
