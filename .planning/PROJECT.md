@@ -23,13 +23,13 @@ Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling h
 - ✓ Frontend auth flow: sign-in form, protected `_authed` layout, dashboard shell — existing (`shop-front/src/routes/`, `components/auth/`)
 - ✓ TanStack Query + server-function data fetching wired — existing (`shop-front/src/integrations/`, `data/`)
 - ✓ Catalog Product schema firmed up + single frozen shared contract — Validated in Phase 1: schema-shared-contract. Product gains `primaryImageUrl`/`isFeatured`/`isTrending`/nullable `rating`,`reviewCount` + a composite `(isActive, createdAt, id)` keyset index (live-DB verified); a single `CatalogPage<T>` Zod factory + lean 9-field `CatalogProductCard` + an opaque base64url `(createdAt,id)` cursor codec live in top-level `shared/`, alias-wired into both workspaces (`@shared/*`).
+- ✓ Frontend mock-API layer: paginated catalog responses that mirror the backend schema, swappable for the real API later — Validated in Phase 2: mock-api-layer (MOCK-01/02/03). A seeded 240-product in-memory dataset + keyset-slice `fetchCatalogPage` returns `CatalogPage<CatalogProductCard>` pages that `CatalogProductCardPageSchema.parse` at the seam (byte-compatible with the Phase 1 contract), enforcing `(createdAt DESC, id DESC)` + opaque-cursor semantics via `@shared/cursor`. The active source sits behind one swappable seam (`shop-front/src/data/catalog.ts`) so the Phase 7 real-API swap is a one-line re-export. 10 Vitest tests cover full-traversal/tiebreaker/tamper/determinism/variety/seam + non-finite limit guards.
 
 ### Active
 
 <!-- This milestone. Hypotheses until shipped. -->
 
 - [ ] Cursor-based pagination on the products/catalog listing endpoint (scalable for infinite scroll) — contract + cursor codec frozen in Phase 1; the real endpoint lands in Phase 6
-- [ ] Frontend mock-API layer: paginated catalog responses that mirror the backend schema, swappable for the real API later
 - [ ] Animated landing page: composed homepage feed (featured / categories / trending sections)
 - [ ] Infinite-scroll product grid beneath the feed, lazy-loading more on scroll
 - [ ] Minimal, smooth motion: lazy-load fade-ins, skeleton/loading states, tasteful card hover
@@ -89,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-02 after Phase 1 (schema-shared-contract) completion*
+*Last updated: 2026-06-03 after Phase 2 (mock-api-layer) completion*
