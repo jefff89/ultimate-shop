@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { catalogInfiniteQueryOptions } from '@/data/catalog.query'
 import ProductCard from '@/components/catalog/ProductCard'
+import EndOfList from '@/components/catalog/EndOfList'
 
 /**
  * The infinite-scroll product grid (GRID-01).
@@ -35,6 +36,10 @@ export default function ProductGrid() {
   const inFlightRef = useRef(false)
 
   useEffect(() => {
+    // Only observe while more pages remain — once the catalog is exhausted there
+    // is no sentinel rendered and no reason to keep an observer alive (no churn,
+    // no fetch attempt past end-of-list).
+    if (!hasNextPage) return
     const sentinel = sentinelRef.current
     if (!sentinel) return
 
@@ -57,7 +62,7 @@ export default function ProductGrid() {
 
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [])
+  }, [hasNextPage])
 
   const products = data?.pages.flatMap((page) => page.items) ?? []
 
@@ -68,7 +73,20 @@ export default function ProductGrid() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div ref={sentinelRef} aria-hidden="true" />
+      {/* Sentinel only exists while more pages remain so the observer above has
+          something to watch; it disappears at end-of-list. */}
+      {hasNextPage && <div ref={sentinelRef} aria-hidden="true" />}
+      {isFetchingNextPage && (
+        <div
+          data-testid="grid-loading"
+          role="status"
+          aria-live="polite"
+          className="py-6 text-center text-sm text-zinc-400"
+        >
+          Loading more…
+        </div>
+      )}
+      {!hasNextPage && !isFetchingNextPage && <EndOfList />}
     </div>
   )
 }
