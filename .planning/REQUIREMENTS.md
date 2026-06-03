@@ -30,9 +30,9 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 ### Mock API
 
-- [ ] **MOCK-01**: A frontend mock-API layer serves paginated cursor responses that conform to the `CatalogPage` contract
-- [ ] **MOCK-02**: Enough mock products are generated (image, price, rating, flags, category) to scroll through many pages convincingly
-- [ ] **MOCK-03**: The mock layer is swappable for the real API behind a single data seam (e.g. `data/catalog.ts`) with no UI changes required
+- [x] **MOCK-01**: A frontend mock-API layer serves paginated cursor responses that conform to the `CatalogPage` contract
+- [x] **MOCK-02**: Enough mock products are generated (image, price, rating, flags, category) to scroll through many pages convincingly
+- [x] **MOCK-03**: The mock layer is swappable for the real API behind a single data seam (e.g. `data/catalog.ts`) with no UI changes required
 
 ### Landing Feed
 
@@ -112,9 +112,9 @@ Which phases cover which requirements. Populated during roadmap creation.
 | CONT-01 | Phase 1 | Complete |
 | CONT-02 | Phase 1 | Complete |
 | CONT-03 | Phase 1 | Complete |
-| MOCK-01 | Phase 2 | Pending |
-| MOCK-02 | Phase 2 | Pending |
-| MOCK-03 | Phase 2 | Pending |
+| MOCK-01 | Phase 2 | Complete |
+| MOCK-02 | Phase 2 | Complete |
+| MOCK-03 | Phase 2 | Complete |
 | GRID-01 | Phase 3 | Pending |
 | GRID-02 | Phase 3 | Pending |
 | GRID-03 | Phase 3 | Pending |

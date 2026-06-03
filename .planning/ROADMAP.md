@@ -160,7 +160,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema + Shared Contract | 3/3 | Complete    | 2026-06-02 |
-| 2. Mock-API Layer | 2/2 | Complete   | 2026-06-03 |
+| 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
 | 3. Infinite-Scroll Grid | 0/TBD | Not started | - |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |
 | 5. Motion & Loading Polish | 0/TBD | Not started | - |
