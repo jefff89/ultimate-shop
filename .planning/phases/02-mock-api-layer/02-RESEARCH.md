@@ -287,7 +287,9 @@ import { encodeCursor, decodeCursor } from '@shared/cursor'
 | A4 | The seam exposes `fetchCatalogPage({ cursor, limit })` (object arg) | Architecture | Medium — Phase 3 `useInfiniteQuery` and Phase 7 real client must agree on this exact signature; if the planner prefers positional args or a different name, lock it now since it is the cross-phase contract |
 | A5 | `MAX_PAGE_SIZE` / latency live in the mock source, not the shared seam signature | Architecture / Anti-patterns | Low — keeps the real client drop-in compatible |
 
-## Open Questions
+## Open Questions (RESOLVED in planning)
+
+> All three resolved by the Phase 2 plans: (1) signature locked to `fetchCatalogPage({ cursor?, limit? }): Promise<CatalogProductCardPage>` with `InvalidCursorError` propagating (02-01-T2); (2) latency kept as a module-internal constant only, NOT in the seam signature (02-01-T2); (3) algorithm tests (full-traversal/tiebreaker/determinism) chosen as primary coverage over dataset snapshots (02-01/02-02).
 
 1. **Exact `fetchCatalogPage` signature (name + arg shape).**
    - What we know: it must take `cursor` + `limit` and return `Promise<CatalogPage<CatalogProductCard>>`; Phase 3 and Phase 7 both code against it.

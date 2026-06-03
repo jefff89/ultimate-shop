@@ -18,19 +18,19 @@ created: 2026-06-03
 | Property | Value |
 |----------|-------|
 | **Framework** | vitest (shop-front) |
-| **Config file** | shop-front/vite.config.ts (Vitest config) |
-| **Quick run command** | `cd shop-front && bun --bun run test` |
+| **Config file** | shop-front/vite.config.ts (Vitest reads it; `@shared/*` alias already present) |
+| **Quick run command** | `cd shop-front && bun --bun run test -- src/data/catalog.source.mock.test.ts` |
 | **Full suite command** | `cd shop-front && bun --bun run test` |
-| **Estimated runtime** | ~{N} seconds |
+| **Estimated runtime** | ~5 seconds (pure in-memory unit tests, no I/O) |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run `cd shop-front && bun --bun run test`
+- **After every task commit:** Run `cd shop-front && bun --bun run test -- src/data/catalog.source.mock.test.ts`
 - **After every plan wave:** Run `cd shop-front && bun --bun run test`
 - **Before `/gsd-verify-work`:** Full suite must be green
-- **Max feedback latency:** {N} seconds
+- **Max feedback latency:** ~5 seconds
 
 ---
 
@@ -38,7 +38,9 @@ created: 2026-06-03
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| {N}-01-01 | 01 | 1 | MOCK-{XX} | T-2-01 / — | {expected secure behavior or "N/A"} | unit | `{command}` | ✅ / ❌ W0 | ⬜ pending |
+| 02-01-T1 | 02-01 | 1 | MOCK-01/02/03 | T-02-03 | faker pinned exact (supply-chain) via blocking-human checkpoint | checkpoint | `cd shop-front && grep -q '"@faker-js/faker": "10.4.0"' package.json` | ❌ W0 | ⬜ pending |
+| 02-01-T2 | 02-01 | 1 | MOCK-01/02/03 | T-02-01 / T-02-02 | seam `.parse()` validates output; only 9 contract fields exposed | unit (tdd) | `cd shop-front && bun --bun run test -- src/data/catalog.source.mock.test.ts` | ❌ W0 | ⬜ pending |
+| 02-02-T1 | 02-02 | 2 | MOCK-01/02/03 | T-02-01 / T-02-02 | tampered cursor → `InvalidCursorError` propagates; tiebreaker/determinism | unit (tdd) | `cd shop-front && bun --bun run test -- src/data/catalog.source.mock.test.ts` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
