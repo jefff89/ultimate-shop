@@ -40,6 +40,13 @@ const config = defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@shared': fileURLToPath(new URL('../shared', import.meta.url)),
+      // The shared contract (../shared/*.ts) lives outside this Vite root, so its
+      // bare `import { z } from 'zod'` can't resolve against shop-front's
+      // node_modules during the production build (rollup can't walk up out of
+      // root). Pin zod to shop-front's installed copy. This is the build-time
+      // half of the Phase 1 "shared/ bare zod import" runtime follow-up; no new
+      // dependency is added (zod@4.2.1 is already installed here).
+      zod: fileURLToPath(new URL('./node_modules/zod', import.meta.url)),
     },
   },
   plugins: [
