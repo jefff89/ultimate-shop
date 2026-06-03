@@ -46,8 +46,8 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 - [x] **GRID-01**: The product grid loads more pages via `useInfiniteQuery` + an IntersectionObserver sentinel as the user scrolls
 - [x] **GRID-02**: The grid shows an explicit end-of-list state so the footer stays reachable
-- [ ] **GRID-03**: Retained pages are capped (`maxPages`) with a documented threshold — no unbounded memory growth
-- [ ] **GRID-04**: A product card renders image, name, price, and rating/reviewCount
+- [x] **GRID-03**: Retained pages are capped (`maxPages`) with a documented threshold — no unbounded memory growth
+- [x] **GRID-04**: A product card renders image, name, price, and rating/reviewCount
 
 ### Motion & Loading
 
@@ -117,8 +117,8 @@ Which phases cover which requirements. Populated during roadmap creation.
 | MOCK-03 | Phase 2 | Complete |
 | GRID-01 | Phase 3 | Complete |
 | GRID-02 | Phase 3 | Complete |
-| GRID-03 | Phase 3 | Pending |
-| GRID-04 | Phase 3 | Pending |
+| GRID-03 | Phase 3 | Complete |
+| GRID-04 | Phase 3 | Complete |
 | FEED-01 | Phase 4 | Pending |
 | FEED-02 | Phase 4 | Pending |
 | FEED-03 | Phase 4 | Pending |

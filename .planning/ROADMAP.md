@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Schema + Shared Contract** - Firm up the Product catalog schema and freeze the single `CatalogPage<T>` Zod contract + cursor codec (critical-path blocker) (completed 2026-06-02)
 - [x] **Phase 2: Mock-API Layer** - In-memory cursor-paginated mock conforming to the contract behind a swappable data seam (completed 2026-06-03)
-- [ ] **Phase 3: Infinite-Scroll Grid** - Product grid that loads pages on scroll via useInfiniteQuery + IntersectionObserver, with end/cap states
+- [x] **Phase 3: Infinite-Scroll Grid** - Product grid that loads pages on scroll via useInfiniteQuery + IntersectionObserver, with end/cap states (completed 2026-06-03)
 - [ ] **Phase 4: Composed Landing Feed** - Hero + Featured/Categories/Trending rails above the grid, fetched independently of the cursor stream
 - [ ] **Phase 5: Motion & Loading Polish** - Skeletons, lazy images with no CLS, restrained motion-safe reveals and card hover
 - [ ] **Phase 6: Real Backend Endpoint** - GET /products keyset pagination + feed-rail endpoints conforming to the same contract (parallel with 2-5)
@@ -161,7 +161,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 |-------|----------------|--------|-----------|
 | 1. Schema + Shared Contract | 3/3 | Complete    | 2026-06-02 |
 | 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
-| 3. Infinite-Scroll Grid | 2/2 | Code complete (human-verify pending) | - |
+| 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |
 | 5. Motion & Loading Polish | 0/TBD | Not started | - |
 | 6. Real Backend Endpoint | 0/TBD | Not started | - |
