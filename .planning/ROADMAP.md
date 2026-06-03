@@ -65,7 +65,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Seeded in-memory dataset + keyset-slice fetchCatalogPage + the swappable seam (data/catalog.ts), proven by the keystone full-traversal test; promote faker to an exact-pinned devDependency
+- [x] 02-01-PLAN.md — Seeded in-memory dataset + keyset-slice fetchCatalogPage + the swappable seam (data/catalog.ts), proven by the keystone full-traversal test; promote faker to an exact-pinned devDependency
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -160,7 +160,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema + Shared Contract | 3/3 | Complete    | 2026-06-02 |
-| 2. Mock-API Layer | 0/2 | Not started | - |
+| 2. Mock-API Layer | 1/2 | In Progress|  |
 | 3. Infinite-Scroll Grid | 0/TBD | Not started | - |
 | 4. Composed Landing Feed | 0/TBD | Not started | - |
 | 5. Motion & Loading Polish | 0/TBD | Not started | - |
