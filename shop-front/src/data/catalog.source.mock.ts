@@ -120,8 +120,14 @@ export async function fetchCatalogPage(args: {
   cursor?: string | null
   limit?: number
 }): Promise<CatalogProductCardPage> {
+  // Guard non-finite (NaN/Infinity) and fractional limits before clamping:
+  // a NaN limit would otherwise slip past Math.min/Math.max and yield slice(from, NaN)
+  // (an empty-but-contract-valid page, WR-01), and a fractional limit would desync the
+  // floored slice length from the hasMore comparison (WR-02). Floor once so slice and
+  // hasMore use the same integer size.
+  const requested = args.limit ?? DEFAULT_PAGE_SIZE
   const size = Math.min(
-    Math.max(args.limit ?? DEFAULT_PAGE_SIZE, 1),
+    Math.max(Number.isFinite(requested) ? Math.floor(requested) : DEFAULT_PAGE_SIZE, 1),
     MAX_PAGE_SIZE,
   )
 

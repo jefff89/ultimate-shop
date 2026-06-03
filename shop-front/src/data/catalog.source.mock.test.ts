@@ -305,4 +305,24 @@ describe('catalog.source.mock fetchCatalogPage', () => {
     expect(() => CatalogProductCardPageSchema.parse(page)).not.toThrow()
     expect(page.items.length).toBeGreaterThan(0)
   })
+
+  it('guards non-finite and fractional limits (WR-01 / WR-02)', async () => {
+    // WR-01: a NaN limit must NOT slip through to slice(from, NaN) and return a
+    // contract-valid-but-empty page (which would make the catalog look empty).
+    // It falls back to DEFAULT_PAGE_SIZE (24).
+    const nanPage = await fetchCatalogPage({ limit: Number.NaN })
+    expect(nanPage.items.length).toBe(24)
+    expect(nanPage.hasMore).toBe(true)
+    expect(() => CatalogProductCardPageSchema.parse(nanPage)).not.toThrow()
+
+    // Infinity is non-finite too -> default page size, not the whole dataset.
+    const infPage = await fetchCatalogPage({ limit: Number.POSITIVE_INFINITY })
+    expect(infPage.items.length).toBe(24)
+
+    // WR-02: a fractional limit is floored ONCE so the returned item count and
+    // the hasMore comparison use the same integer size (no desync at boundaries).
+    const fracPage = await fetchCatalogPage({ limit: 2.9 })
+    expect(fracPage.items.length).toBe(2)
+    expect(fracPage.hasMore).toBe(true)
+  })
 })
