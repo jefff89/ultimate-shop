@@ -189,4 +189,39 @@ describe('ProductGrid', () => {
     await new Promise((r) => setTimeout(r, 20))
     expect(fetchCatalogPage).toHaveBeenCalledTimes(1)
   })
+
+  it('renders the end-of-list state and no spinner when hasNextPage is false', async () => {
+    fetchCatalogPage.mockResolvedValue(
+      makePage({
+        items: [makeCard({ id: 'a', name: 'Last Item' })],
+        nextCursor: null,
+        hasMore: false,
+      }),
+    )
+    const { default: ProductGrid } = await import('./ProductGrid')
+    render(<ProductGrid />, { wrapper })
+
+    await waitFor(() => expect(screen.getByText('Last Item')).toBeTruthy())
+
+    // Explicit terminal state appears (footer stays reachable, no infinite spin).
+    expect(screen.getByTestId('end-of-list')).toBeTruthy()
+    // No loading indicator is rendered in the terminal state.
+    expect(screen.queryByTestId('grid-loading')).toBeNull()
+  })
+
+  it('does not render the end-of-list state while more pages remain', async () => {
+    fetchCatalogPage.mockResolvedValue(
+      makePage({
+        items: [makeCard({ id: 'a', name: 'More To Come' })],
+        nextCursor: 'cursor-1',
+        hasMore: true,
+      }),
+    )
+    const { default: ProductGrid } = await import('./ProductGrid')
+    render(<ProductGrid />, { wrapper })
+
+    await waitFor(() => expect(screen.getByText('More To Come')).toBeTruthy())
+    // While there is a next page, no terminal state is shown.
+    expect(screen.queryByTestId('end-of-list')).toBeNull()
+  })
 })
