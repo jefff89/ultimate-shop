@@ -18,14 +18,14 @@ result: [pending]
 
 ### 2. Decide on limit input-validation warnings (WR-01 / WR-02)
 expected: Team decides — either apply the two-line fix in `catalog.source.mock.ts` (`Number.isFinite` guard + `Math.floor` the clamped size once) or explicitly accept current behavior before Phase 3 builds on the seam. WR-01: `limit: NaN` silently returns `{ items: [], hasMore: false }` (catalog looks empty). WR-02: a fractional `limit` can make item count and `hasMore` disagree at an exact set boundary. Both documented in 02-REVIEW.md; the seam type is `number`, which permits these at runtime.
-result: [pending]
+result: resolved — user chose to apply the fix. Implemented in commit c1ed676 (`Number.isFinite` guard + `Math.floor(requested)`, non-finite falls back to DEFAULT_PAGE_SIZE) with a regression test `guards non-finite and fractional limits (WR-01 / WR-02)`. Suite now 10/10 green.
 
 ## Summary
 
 total: 2
-passed: 0
+passed: 1
 issues: 0
-pending: 2
+pending: 1
 skipped: 0
 blocked: 0
 
