@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 /**
  * The single frozen catalog contract (Phase 1, D-01/D-03).
@@ -41,9 +41,9 @@ export const CatalogProductCardSchema = z.object({
   reviewCount: z.number().int().nullable(),
   isFeatured: z.boolean(),
   isTrending: z.boolean(),
-})
+});
 
-export type CatalogProductCard = z.infer<typeof CatalogProductCardSchema>
+export type CatalogProductCard = z.infer<typeof CatalogProductCardSchema>;
 
 /**
  * Generic page factory (CONT-01): the single CatalogPage<T> shape every consumer
@@ -57,21 +57,23 @@ export const catalogPage = <T extends z.ZodType>(item: T) =>
     items: z.array(item),
     nextCursor: z.string().nullable(),
     hasMore: z.boolean(),
-  })
+  });
 
 /**
  * TYPE helper so downstream code can name the page type generically without
  * re-deriving it from the factory each time.
  */
 export type CatalogPage<T> = {
-  items: T[]
-  nextCursor: string | null
-  hasMore: boolean
-}
+  items: T[];
+  nextCursor: string | null;
+  hasMore: boolean;
+};
 
 /**
  * Concrete page schema for the common case the mock and the real client share.
  */
-export const CatalogProductCardPageSchema = catalogPage(CatalogProductCardSchema)
+export const CatalogProductCardPageSchema = catalogPage(
+  CatalogProductCardSchema,
+);
 
-export type CatalogProductCardPage = CatalogPage<CatalogProductCard>
+export type CatalogProductCardPage = CatalogPage<CatalogProductCard>;
