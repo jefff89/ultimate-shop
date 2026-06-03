@@ -101,8 +101,20 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A Categories rail surfaces product categories
   4. Each rail fetches via its own independent `useQuery` and shares no pagination state with the infinite grid
 
-**Plans**: TBD
+**Plans**: 3 plans
 **UI hint**: yes
+
+**Wave 1**
+
+- [ ] 04-01-PLAN.md — Rail data layer (isolated ['feed',*] query factories + seam fetchers) + shared Rail shell + Hero + Featured rail wired above the grid
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 04-02-PLAN.md — Trending rail (isTrending products) on ['feed','trending'], composed into the feed
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 04-03-PLAN.md — Categories rail (product categories) on ['feed','categories'], completing the four-section feed
 
 ### Phase 5: Motion & Loading Polish
 
