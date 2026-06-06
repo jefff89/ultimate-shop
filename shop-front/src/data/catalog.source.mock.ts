@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker'
 import {
   CatalogProductCardPageSchema,
+  CategoryRailItemSchema,
   type CatalogProductCard,
   type CatalogProductCardPage,
+  type CategoryRailItem,
 } from '@shared/catalog.contract'
 import { decodeCursor, encodeCursor, type CursorTuple } from '@shared/cursor'
 
@@ -155,4 +157,88 @@ export async function fetchCatalogPage(args: {
 
   // Assert contract conformance at the seam so any drift fails loudly.
   return CatalogProductCardPageSchema.parse(page)
+}
+
+// --- Landing-feed rail fetchers (Phase 4) -------------------------------------
+//
+// These resolve plain arrays (NOT a CatalogPage) so a rail never carries
+// cursor/hasMore state and shares zero state with fetchCatalogPage. UI imports
+// them ONLY via the seam (./catalog.ts), preserving the Phase 7 one-line swap.
+//
+// `RAIL_DEFAULT_LIMIT` is the local fallback when no limit is passed; the
+// single source of truth for the rail cap is `RAIL_LIMIT` in feed.query.ts,
+// which the query factories pass explicitly. This fallback only guards a direct
+// call with no args. RAIL_LIMIT (12) ≤ this fallback, so the cap always binds.
+const RAIL_DEFAULT_LIMIT = 12
+
+// Bound a rail limit the same way the catalog seam bounds its page size:
+// guard non-finite/fractional, floor once, clamp to ≥1 and ≤ the canonical max.
+function boundRailLimit(limit?: number): number {
+  const requested = limit ?? RAIL_DEFAULT_LIMIT
+  return Math.min(
+    Math.max(Number.isFinite(requested) ? Math.floor(requested) : RAIL_DEFAULT_LIMIT, 1),
+    MAX_PAGE_SIZE,
+  )
+}
+
+/**
+ * Featured products for the Featured rail: ONLY isFeatured rows, in the
+ * canonical (createdAt DESC, id DESC) order, capped at `limit` (T-04-04).
+ */
+export async function fetchFeaturedProducts({
+  limit,
+}: { limit?: number } = {}): Promise<Array<CatalogProductCard>> {
+  const size = boundRailLimit(limit)
+  return PRODUCTS.filter((row) => row.isFeatured)
+    .slice(0, size)
+    .map(toCard)
+}
+
+/**
+ * Trending products for the Trending rail (consumed by Plan 02): ONLY
+ * isTrending rows, canonical order, capped at `limit`.
+ */
+export async function fetchTrendingProducts({
+  limit,
+}: { limit?: number } = {}): Promise<Array<CatalogProductCard>> {
+  const size = boundRailLimit(limit)
+  return PRODUCTS.filter((row) => row.isTrending)
+    .slice(0, size)
+    .map(toCard)
+}
+
+// A fixed, deterministic category set (consumed by Plan 03). Small and seeded —
+// NOT derived from product rows — so the Categories rail payload is bounded
+// (T-04-04) and stable across runs. uuids are fixed inline (not faker) so the
+// list never depends on faker call-order elsewhere in this module.
+const CATEGORY_SEED: ReadonlyArray<{ name: string; slug: string }> = [
+  { name: 'Apparel', slug: 'apparel' },
+  { name: 'Electronics', slug: 'electronics' },
+  { name: 'Home & Kitchen', slug: 'home-kitchen' },
+  { name: 'Outdoors', slug: 'outdoors' },
+  { name: 'Beauty', slug: 'beauty' },
+  { name: 'Toys & Games', slug: 'toys-games' },
+  { name: 'Books', slug: 'books' },
+  { name: 'Sports', slug: 'sports' },
+]
+
+const CATEGORIES: ReadonlyArray<CategoryRailItem> = CATEGORY_SEED.map(
+  (c, i) =>
+    // Validate each at the seam so any drift fails loudly, mirroring the
+    // page-schema parse in fetchCatalogPage.
+    CategoryRailItemSchema.parse({
+      // Stable, deterministic id derived from the index (no faker dependency).
+      id: `category-${String(i + 1).padStart(2, '0')}`,
+      name: c.name,
+      slug: c.slug,
+    }),
+)
+
+/**
+ * The category list for the Categories rail (consumed by Plan 03): a non-empty,
+ * deduped, deterministic CategoryRailItem[]. Resolves independently of any
+ * product fetch (no shared cursor/state).
+ */
+export async function fetchCategories(): Promise<Array<CategoryRailItem>> {
+  return [...CATEGORIES]
 }

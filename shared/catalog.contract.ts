@@ -77,3 +77,20 @@ export const CatalogProductCardPageSchema = catalogPage(
 );
 
 export type CatalogProductCardPage = CatalogPage<CatalogProductCard>;
+
+/**
+ * Lean category shape for the landing-feed Categories rail (Phase 4).
+ *
+ * Mirrors ONLY the backend Category entity's public fields (id, name, slug) —
+ * deliberately omits description / parent / children so the rail payload stays
+ * small (T-04-04) and the rail never depends on deep category relations. This is
+ * a separate schema from the frozen 9-field CatalogProductCard, which is NOT
+ * touched by this addition.
+ */
+export const CategoryRailItemSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  slug: z.string(),
+});
+
+export type CategoryRailItem = z.infer<typeof CategoryRailItemSchema>;
