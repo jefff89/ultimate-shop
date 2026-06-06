@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { act, cleanup, render } from '@testing-library/react'
 import Reveal from '@/components/Reveal'
 
@@ -62,16 +63,19 @@ afterEach(() => {
 })
 
 describe('Reveal', () => {
-  it('renders children fully visible on initial render (SSR/no-JS baseline)', () => {
+  it('renders children fully visible on the SSR / no-JS baseline (before effects run)', () => {
     stubMatchMedia(false)
-    const { container } = render(<Reveal>Hello</Reveal>)
-    const html = container.innerHTML
-    // No inline opacity:0 and no opacity-0 utility in the initial markup —
-    // content must be reachable with JS disabled and on the first hydration pass.
+    // The SSR / no-JS / first-hydration-render baseline is the server-rendered
+    // markup BEFORE any effect runs. Asserting it via renderToStaticMarkup is
+    // the faithful test of the contract: no inline opacity:0, no opacity-0
+    // utility, content fully present — so JS-disabled and first-paint users see
+    // content and the first client render agrees with the server (no mismatch).
+    const html = renderToStaticMarkup(<Reveal>Hello</Reveal>)
     expect(html).not.toContain('opacity: 0')
     expect(html).not.toContain('opacity:0')
     expect(html).not.toContain('opacity-0')
-    expect(container.textContent).toContain('Hello')
+    expect(html).not.toContain('translate-y-2')
+    expect(html).toContain('Hello')
   })
 
   it('applies a motion-safe-gated pre-reveal state after mount, then reveals on intersection', () => {
