@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 03-02-PLAN.md code tasks; human-verify checkpoint deferred (pending live UAT)
-last_updated: "2026-06-06T05:27:51.095Z"
+last_updated: "2026-06-06T05:34:50.443Z"
 last_activity: 2026-06-06 -- Phase 04 execution started
 progress:
   total_phases: 7
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 9
-  percent: 43
+  completed_plans: 10
+  percent: 57
 ---
 
 # Project State
@@ -75,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase 3]: [03-02]: vite.config.ts aliases `zod` to shop-front's installed copy so the externally-rooted shared/ contract's bare zod import resolves at production build time — build-time half of the Phase 1 follow-up, no new dependency
 - [Phase ?]: [04-01]: Feed rails fetch via isolated ['feed',*] query keys (RAIL_LIMIT=12), structurally separate from the ['catalog'] infinite stream (FEED-05); route loader parallel-prefetches rails via non-throwing prefetchQuery. Hero uses gradient, no remote image.
 - [Phase ?]: [04-02]: Trending rail mirrors FeaturedRail on the isolated ['feed','trending'] key, reusing the Phase-4 four-state Rail shell; loader Promise.all extended with non-throwing prefetchQuery. Completes FEED-04. Suite 44/44 green.
+- [Phase ?]: [04-03]: Categories rail uses CategoryCard pill + isolated ['feed','categories'] query; CategoryCard uses plain internal anchor (/?category=<slug>, encodeURIComponent) instead of TanStack <Link> so it renders in isolation/tests (plan permitted either). LandingFeed now Hero→Featured→Trending→Categories. Suite 47/47 green.
 
 ### Pending Todos
 
