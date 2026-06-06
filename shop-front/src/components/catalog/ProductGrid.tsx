@@ -4,6 +4,7 @@ import { catalogInfiniteQueryOptions } from '@/data/catalog.query'
 import ProductCard from '@/components/catalog/ProductCard'
 import ProductCardSkeleton from '@/components/catalog/ProductCardSkeleton'
 import EndOfList from '@/components/catalog/EndOfList'
+import Reveal from '@/components/Reveal'
 
 // How many skeleton placeholders to render during the initial page-1 load.
 const INITIAL_SKELETON_COUNT = 8
@@ -93,8 +94,13 @@ export default function ProductGrid() {
   return (
     <div>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {products.map((product, i) => (
+          // Reveal renders children fully visible by default (SSR/no-JS safe);
+          // the motion-safe fade+rise with per-item stagger is applied only
+          // post-hydration when the card enters the viewport.
+          <Reveal key={product.id} index={i}>
+            <ProductCard product={product} />
+          </Reveal>
         ))}
       </div>
       {/* Sentinel only exists while more pages remain so the observer above has

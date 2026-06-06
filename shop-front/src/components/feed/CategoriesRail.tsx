@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { categoriesRailQueryOptions } from '@/data/feed.query'
 import Rail from '@/components/feed/Rail'
 import CategoryCard from '@/components/feed/CategoryCard'
+import Reveal from '@/components/Reveal'
 
 /**
  * Categories rail (Phase 4, FEED-03/05).
@@ -22,8 +23,14 @@ export default function CategoriesRail() {
 
   return (
     <Rail title="Categories" status={status} isEmpty={items.length === 0}>
-      {items.map((category) => (
-        <CategoryCard key={category.id} category={category} />
+      {items.map((category, i) => (
+        // Reveal carries `shrink-0` so the category pill keeps its intrinsic
+        // width in the horizontal row; it adds the motion-safe reveal-on-scroll
+        // with per-item stagger while rendering the pill fully visible by
+        // default (SSR/no-JS safe).
+        <Reveal key={category.id} index={i} className="shrink-0">
+          <CategoryCard category={category} />
+        </Reveal>
       ))}
     </Rail>
   )

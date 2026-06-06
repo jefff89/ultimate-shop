@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { trendingRailQueryOptions } from '@/data/feed.query'
 import Rail from '@/components/feed/Rail'
 import ProductCard from '@/components/catalog/ProductCard'
+import Reveal from '@/components/Reveal'
 
 /**
  * Trending rail (Phase 4, FEED-04/05).
@@ -20,11 +21,14 @@ export default function TrendingRail() {
 
   return (
     <Rail title="Trending" status={status} isEmpty={items.length === 0}>
-      {items.map((product) => (
-        // Fixed-width wrapper so the horizontal row sizes each card correctly.
-        <div key={product.id} className="w-44 shrink-0">
+      {items.map((product, i) => (
+        // Reveal is the fixed-width row item (keeps `w-44 shrink-0` so the
+        // horizontal row sizes each card correctly) and adds the motion-safe
+        // reveal-on-scroll with per-item stagger; children render fully visible
+        // by default (SSR/no-JS safe).
+        <Reveal key={product.id} index={i} className="w-44 shrink-0">
           <ProductCard product={product} />
-        </div>
+        </Reveal>
       ))}
     </Rail>
   )
