@@ -2,7 +2,11 @@ import { useEffect, useRef } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { catalogInfiniteQueryOptions } from '@/data/catalog.query'
 import ProductCard from '@/components/catalog/ProductCard'
+import ProductCardSkeleton from '@/components/catalog/ProductCardSkeleton'
 import EndOfList from '@/components/catalog/EndOfList'
+
+// How many skeleton placeholders to render during the initial page-1 load.
+const INITIAL_SKELETON_COUNT = 8
 
 /**
  * The infinite-scroll product grid (GRID-01).
@@ -18,7 +22,7 @@ import EndOfList from '@/components/catalog/EndOfList'
  * Plan 02 owns that and wires this grid into the landing route with prefetch.
  */
 export default function ProductGrid() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useInfiniteQuery(catalogInfiniteQueryOptions())
 
   const sentinelRef = useRef<HTMLDivElement | null>(null)
@@ -65,6 +69,26 @@ export default function ProductGrid() {
   }, [hasNextPage])
 
   const products = data?.pages.flatMap((page) => page.items) ?? []
+
+  // Initial page-1 load: show pixel-identical pulse skeletons in the SAME grid
+  // layout so the skeleton -> card swap is zero-CLS. Strictly the `isPending`
+  // (first page not yet resolved) state — the success / loading-more / sentinel
+  // / end-of-list behavior below is untouched.
+  if (isPending) {
+    return (
+      <div
+        data-testid="grid-skeleton"
+        role="status"
+        aria-busy="true"
+        className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+      >
+        {Array.from({ length: INITIAL_SKELETON_COUNT }).map((_, i) => (
+          <ProductCardSkeleton key={i} />
+        ))}
+        <span className="sr-only">Loading products…</span>
+      </div>
+    )
+  }
 
   return (
     <div>
