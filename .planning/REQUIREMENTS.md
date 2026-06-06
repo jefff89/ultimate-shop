@@ -36,11 +36,11 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 ### Landing Feed
 
-- [ ] **FEED-01**: The homepage renders a composed feed above the grid, starting with a hero section
-- [ ] **FEED-02**: A Featured rail displays `isFeatured` products
-- [ ] **FEED-03**: A Categories rail surfaces product categories
-- [ ] **FEED-04**: A Trending rail displays `isTrending` products
-- [ ] **FEED-05**: Feed rails fetch via independent queries and are not entangled with the infinite-scroll cursor stream
+- [x] **FEED-01**: The homepage renders a composed feed above the grid, starting with a hero section
+- [x] **FEED-02**: A Featured rail displays `isFeatured` products
+- [x] **FEED-03**: A Categories rail surfaces product categories
+- [x] **FEED-04**: A Trending rail displays `isTrending` products
+- [x] **FEED-05**: Feed rails fetch via independent queries and are not entangled with the infinite-scroll cursor stream
 
 ### Infinite Grid
 
@@ -119,11 +119,11 @@ Which phases cover which requirements. Populated during roadmap creation.
 | GRID-02 | Phase 3 | Complete |
 | GRID-03 | Phase 3 | Complete |
 | GRID-04 | Phase 3 | Complete |
-| FEED-01 | Phase 4 | Pending |
-| FEED-02 | Phase 4 | Pending |
-| FEED-03 | Phase 4 | Pending |
-| FEED-04 | Phase 4 | Pending |
-| FEED-05 | Phase 4 | Pending |
+| FEED-01 | Phase 4 | Complete |
+| FEED-02 | Phase 4 | Complete |
+| FEED-03 | Phase 4 | Complete |
+| FEED-04 | Phase 4 | Complete |
+| FEED-05 | Phase 4 | Complete |
 | MOT-01 | Phase 5 | Pending |
 | MOT-02 | Phase 5 | Pending |
 | MOT-03 | Phase 5 | Pending |
