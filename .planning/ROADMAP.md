@@ -110,7 +110,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 04-02-PLAN.md — Trending rail (isTrending products) on ['feed','trending'], composed into the feed
+- [x] 04-02-PLAN.md — Trending rail (isTrending products) on ['feed','trending'], composed into the feed
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -174,7 +174,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 1. Schema + Shared Contract | 3/3 | Complete    | 2026-06-02 |
 | 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
-| 4. Composed Landing Feed | 1/3 | In Progress|  |
+| 4. Composed Landing Feed | 2/3 | In Progress|  |
 | 5. Motion & Loading Polish | 0/TBD | Not started | - |
 | 6. Real Backend Endpoint | 0/TBD | Not started | - |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
