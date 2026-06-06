@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 03-02-PLAN.md code tasks; human-verify checkpoint deferred (pending live UAT)
-last_updated: "2026-06-03T11:18:08.037Z"
-last_activity: 2026-06-03 -- Phase 04 execution started
+last_updated: "2026-06-06T05:23:08.788Z"
+last_activity: 2026-06-06 -- Phase 04 execution started
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 8
   percent: 43
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-06-02)
 ## Current Position
 
 Phase: 04 (composed-landing-feed) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 04
-Last activity: 2026-06-03 -- Phase 04 execution started
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-06-06 -- Phase 04 execution started
 
 Progress: [████░░░░░░] 43%
 
@@ -73,6 +73,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [01-02]: zod@4.2.1 pinned exact in shop-back to match shop-front (D-03); shared/ bare zod import is a Phase 6 runtime-resolution follow-up (no root node_modules)
 - [Phase 3]: [03-02]: Landing route `/` loader server-prefetches page 1 via the shared catalogInfiniteQueryOptions() factory; identical queryKey makes hydration satisfy the client query (no duplicate page-1 refetch). SSR dehydrate/hydrate automatic via setupRouterSsrQueryIntegration
 - [Phase 3]: [03-02]: vite.config.ts aliases `zod` to shop-front's installed copy so the externally-rooted shared/ contract's bare zod import resolves at production build time — build-time half of the Phase 1 follow-up, no new dependency
+- [Phase ?]: [04-01]: Feed rails fetch via isolated ['feed',*] query keys (RAIL_LIMIT=12), structurally separate from the ['catalog'] infinite stream (FEED-05); route loader parallel-prefetches rails via non-throwing prefetchQuery. Hero uses gradient, no remote image.
 
 ### Pending Todos
 

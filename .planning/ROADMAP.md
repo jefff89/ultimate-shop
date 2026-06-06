@@ -106,7 +106,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 04-01-PLAN.md — Rail data layer (isolated ['feed',*] query factories + seam fetchers) + shared Rail shell + Hero + Featured rail wired above the grid
+- [x] 04-01-PLAN.md — Rail data layer (isolated ['feed',*] query factories + seam fetchers) + shared Rail shell + Hero + Featured rail wired above the grid
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -174,7 +174,7 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 1. Schema + Shared Contract | 3/3 | Complete    | 2026-06-02 |
 | 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
-| 4. Composed Landing Feed | 0/TBD | Not started | - |
+| 4. Composed Landing Feed | 1/3 | In Progress|  |
 | 5. Motion & Loading Polish | 0/TBD | Not started | - |
 | 6. Real Backend Endpoint | 0/TBD | Not started | - |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
