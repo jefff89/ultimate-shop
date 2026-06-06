@@ -1,14 +1,16 @@
 import Hero from '@/components/feed/Hero'
 import FeaturedRail from '@/components/feed/FeaturedRail'
 import TrendingRail from '@/components/feed/TrendingRail'
+import CategoriesRail from '@/components/feed/CategoriesRail'
 
 /**
  * Composed landing feed (Phase 4), rendered ABOVE the infinite grid.
  *
  * A thin layout container: Hero first, then the Featured rail, then the
- * Trending rail. Each rail fetches on its own isolated ['feed',*] key, so one
- * rail's loading/error never disturbs the others or the grid. The Categories
- * rail is added here by Plan 03.
+ * Trending rail, then the Categories rail. Each rail fetches on its own isolated
+ * ['feed',*] key, so one rail's loading/error never disturbs the others or the
+ * grid. This is the complete four-section feed (Hero + Featured + Trending +
+ * Categories).
  */
 export default function LandingFeed() {
   return (
@@ -16,6 +18,7 @@ export default function LandingFeed() {
       <Hero />
       <FeaturedRail />
       <TrendingRail />
+      <CategoriesRail />
     </div>
   )
 }

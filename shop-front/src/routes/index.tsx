@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { catalogInfiniteQueryOptions } from '@/data/catalog.query'
 import {
+  categoriesRailQueryOptions,
   featuredRailQueryOptions,
   trendingRailQueryOptions,
 } from '@/data/feed.query'
@@ -15,18 +16,20 @@ export const Route = createFileRoute('/')({
   // after hydration. SSR dehydrate/hydrate is automatic via
   // setupRouterSsrQueryIntegration, so no manual dehydrate/HydrationBoundary.
   //
-  // The featured AND trending rails are prefetched IN PARALLEL (avoid a request
-  // waterfall, Vercel react best-practice) using the NON-throwing
-  // `prefetchQuery`: a rail fetch failure degrades to the client-side Rail error
-  // state and never rejects the route loader (carry-forward Phase 3 WR-05). Each
-  // rail prefetches on its own isolated ['feed',*] key, so one rail's failure
-  // never disturbs the other rail or the grid. The grid uses the throwing
-  // `ensureInfiniteQueryData` because page 1 is load-bearing.
+  // All three rails (featured, trending, categories) are prefetched IN PARALLEL
+  // (avoid a request waterfall, Vercel react best-practice) using the
+  // NON-throwing `prefetchQuery`: a rail fetch failure degrades to the
+  // client-side Rail error state and never rejects the route loader
+  // (carry-forward Phase 3 WR-05). Each rail prefetches on its own isolated
+  // ['feed',*] key, so one rail's failure never disturbs the other rails or the
+  // grid. The grid uses the throwing `ensureInfiniteQueryData` because page 1 is
+  // load-bearing.
   loader: async ({ context }) => {
     await Promise.all([
       context.queryClient.ensureInfiniteQueryData(catalogInfiniteQueryOptions()),
       context.queryClient.prefetchQuery(featuredRailQueryOptions()),
       context.queryClient.prefetchQuery(trendingRailQueryOptions()),
+      context.queryClient.prefetchQuery(categoriesRailQueryOptions()),
     ])
   },
   component: App,
