@@ -53,7 +53,7 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 - [x] **MOT-01**: Skeleton/loading states display while pages and rails load
 - [x] **MOT-02**: Images are lazy-loaded with reserved dimensions (no layout shift / CLS) and a graceful fallback
-- [ ] **MOT-03**: Minimal reveal-on-scroll fade-ins, `motion-safe`-gated (respects reduced-motion), with an un-animated SSR baseline (no hydration mismatch)
+- [x] **MOT-03**: Minimal reveal-on-scroll fade-ins, `motion-safe`-gated (respects reduced-motion), with an un-animated SSR baseline (no hydration mismatch)
 - [x] **MOT-04**: Tasteful, restrained card hover lift
 
 ## v2 Requirements
@@ -126,7 +126,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | FEED-05 | Phase 4 | Complete |
 | MOT-01 | Phase 5 | Complete |
 | MOT-02 | Phase 5 | Complete |
-| MOT-03 | Phase 5 | Pending |
+| MOT-03 | Phase 5 | Complete |
 | MOT-04 | Phase 5 | Complete |
 | CAT-01 | Phase 6 | Pending |
 | CAT-02 | Phase 6 | Pending |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-06-06T09:02:56.129Z"
-last_activity: 2026-06-06 -- Phase 05 execution started
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-06-06T14:40:00.000Z"
+last_activity: 2026-06-06 -- Completed 05-02 (reveal-on-scroll, MOT-03)
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 12
-  completed_plans: 11
-  percent: 57
+  completed_plans: 12
+  percent: 64
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-02)
 ## Current Position
 
 Phase: 05 (motion-loading-polish) — EXECUTING
-Plan: 2 of 2
-Status: Ready to execute
-Last activity: 2026-06-06 -- Phase 05 execution started
+Plan: 2 of 2 (both plans complete)
+Status: All plans executed — phase verification pending
+Last activity: 2026-06-06 -- Completed 05-02 (reveal-on-scroll, MOT-03)
 
-Progress: [████░░░░░░] 43%
+Progress: [██████░░░░] 64%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [████░░░░░░] 43%
 | Phase 01-schema-shared-contract P02 | 11min | 2 tasks | 5 files |
 | Phase 03 P02 | ~25min | 2 tasks (+1 deferred checkpoint) | 5 files |
 | Phase 05 P01 | 5min | 3 tasks | 7 files |
+| Phase 05 P02 | ~10min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [05-01]: ProductCardSkeleton mirrors ProductCard box (rounded-xl border, aspect-square well, gap-1 p-3 body) so the isPending->card swap is zero-CLS; grid renders 8 skeletons in a role=status/aria-busy container reusing the exact grid classes
 - [Phase ?]: [05-01]: SafeImage onError swaps to a neutral bg-zinc-100 box with a decorative lucide ImageOff icon; box uses role=img+aria-label={alt} for AT, reserves same width/height (or h-full w-full), scheme validation kept byte-for-byte (MOT-02)
 - [Phase ?]: [05-01]: ProductCard hover lift gates the transform under motion-safe: (-translate-y-0.5) with hover:shadow-md + duration-200, transform/shadow only, image group-hover:scale-105 retained (MOT-04)
+- [Phase ?]: [05-02]: Reveal-on-scroll (MOT-03) via useReveal (mount-guarded, motion-safe IntersectionObserver) + Reveal wrapper — children fully visible by default; motion-safe:opacity-0/translate-y-2 pre-reveal applied only post-hydration, transitions to opacity-100/translate-y-0 over ~400ms with per-item transitionDelay stagger; opacity+transform only. SSR/no-JS baseline asserted via renderToStaticMarkup; applied to grid cards + all three rails. Build OK, 65/65 green.
 
 ### Pending Todos
 
@@ -106,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-06T09:02:56.125Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-06-06T14:40:00.000Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
