@@ -25,7 +25,7 @@ export default function ProductCard({
   product: CatalogProductCard
 }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition duration-200 hover:shadow-md motion-safe:hover:-translate-y-0.5">
       <div className="aspect-square overflow-hidden bg-zinc-100">
         <SafeImage
           src={product.primaryImageUrl}
