@@ -128,6 +128,10 @@ None - no external service configuration required.
 - `trendingRailQueryOptions()` + `fetchTrendingProducts` are ready for Plan 02 (Trending rail); `categoriesRailQueryOptions()` + `fetchCategories` + `CategoryRailItem` are ready for Plan 03 (Categories rail). Both rails plug into `LandingFeed` alongside the existing Featured rail, reusing the same `Rail` shell.
 - Carry-forward outstanding: Phase 3's deferred live human-verify checkpoint (03-02) still applies to the homepage; this plan was verified via automated tests + build only. A live pass of `cd shop-front && bun --bun run dev` (port 3001) should confirm the hero/rail render above the grid and the rail's loading/empty/error states visually.
 
+## Self-Check: PASSED
+
+All 8 created source files + SUMMARY.md verified present on disk; all three commits (`9ac6b67`, `31de92e`, `6a3a9c9`) present in git history. No `node_modules` artifact tracked.
+
 ---
 *Phase: 04-composed-landing-feed*
 *Completed: 2026-06-06*
