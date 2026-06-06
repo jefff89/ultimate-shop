@@ -129,8 +129,16 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Reveal-on-scroll fade-ins are `motion-safe`-gated (respect reduced-motion) with an un-animated SSR baseline and no hydration mismatch (page is fully visible with JS disabled)
   4. Cards have a tasteful, restrained hover lift animating only transform/opacity
 
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+**Wave 1**
+
+- [ ] 05-01-PLAN.md — Grid initial-load pulse skeletons (MOT-01), SafeImage onError fallback (MOT-02), and ProductCard motion-safe hover lift (MOT-04)
+
+**Wave 2** *(blocked on Wave 1 completion — shares ProductGrid.tsx)*
+
+- [ ] 05-02-PLAN.md — SSR-safe `useReveal` hook + `Reveal` wrapper and apply motion-safe reveal-on-scroll to grid cards + all three rails (MOT-03)
 
 ### Phase 6: Real Backend Endpoint
 
@@ -175,6 +183,6 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
-| 5. Motion & Loading Polish | 0/TBD | Not started | - |
+| 5. Motion & Loading Polish | 0/2 | Not started | - |
 | 6. Real Backend Endpoint | 0/TBD | Not started | - |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
