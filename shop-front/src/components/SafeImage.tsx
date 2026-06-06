@@ -8,9 +8,9 @@
 // box is rendered in the SAME reserved dimensions, so the loaded -> fallback swap
 // is zero-CLS and the browser's broken-image glyph never appears (MOT-02).
 
-import type { CSSProperties, ImgHTMLAttributes } from 'react'
-import { useState } from 'react'
 import { ImageOff } from 'lucide-react'
+import { useState } from 'react'
+import type { CSSProperties, ImgHTMLAttributes } from 'react'
 
 type SafeImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> & {
   src: string | null | undefined
