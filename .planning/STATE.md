@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Session resumed at Phase 5 checkpoint — UI-SPEC approved, proceeding to plan Phase 5
-last_updated: "2026-06-06T08:52:10.626Z"
-last_activity: 2026-06-06 -- Phase 05 planning complete
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-06-06T09:02:56.129Z"
+last_activity: 2026-06-06 -- Phase 05 execution started
 progress:
   total_phases: 7
   completed_phases: 4
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 12
+  completed_plans: 11
   percent: 57
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-02)
 
 **Core value:** Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling homepage — and the data model behind it scales cleanly as the catalog grows.
-**Current focus:** Phase 04 — composed-landing-feed
+**Current focus:** Phase 05 — motion-loading-polish
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (motion-loading-polish) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-06-06 -- Phase 05 planning complete
+Last activity: 2026-06-06 -- Phase 05 execution started
 
 Progress: [████░░░░░░] 43%
 
@@ -58,6 +58,7 @@ Progress: [████░░░░░░] 43%
 | Phase 01 P03 | 4min | 2 tasks | 2 files |
 | Phase 01-schema-shared-contract P02 | 11min | 2 tasks | 5 files |
 | Phase 03 P02 | ~25min | 2 tasks (+1 deferred checkpoint) | 5 files |
+| Phase 05 P01 | 5min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [04-01]: Feed rails fetch via isolated ['feed',*] query keys (RAIL_LIMIT=12), structurally separate from the ['catalog'] infinite stream (FEED-05); route loader parallel-prefetches rails via non-throwing prefetchQuery. Hero uses gradient, no remote image.
 - [Phase ?]: [04-02]: Trending rail mirrors FeaturedRail on the isolated ['feed','trending'] key, reusing the Phase-4 four-state Rail shell; loader Promise.all extended with non-throwing prefetchQuery. Completes FEED-04. Suite 44/44 green.
 - [Phase ?]: [04-03]: Categories rail uses CategoryCard pill + isolated ['feed','categories'] query; CategoryCard uses plain internal anchor (/?category=<slug>, encodeURIComponent) instead of TanStack <Link> so it renders in isolation/tests (plan permitted either). LandingFeed now Hero→Featured→Trending→Categories. Suite 47/47 green.
+- [Phase ?]: [05-01]: ProductCardSkeleton mirrors ProductCard box (rounded-xl border, aspect-square well, gap-1 p-3 body) so the isPending->card swap is zero-CLS; grid renders 8 skeletons in a role=status/aria-busy container reusing the exact grid classes
+- [Phase ?]: [05-01]: SafeImage onError swaps to a neutral bg-zinc-100 box with a decorative lucide ImageOff icon; box uses role=img+aria-label={alt} for AT, reserves same width/height (or h-full w-full), scheme validation kept byte-for-byte (MOT-02)
+- [Phase ?]: [05-01]: ProductCard hover lift gates the transform under motion-safe: (-translate-y-0.5) with hover:shadow-md + duration-200, transform/shadow only, image group-hover:scale-105 retained (MOT-04)
 
 ### Pending Todos
 
@@ -102,6 +106,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-06 (resumed)
-Stopped at: Session resumed at Phase 5 checkpoint — UI-SPEC approved, proceeding to plan Phase 5
-Resume file: .planning/phases/05-motion-loading-polish/05-UI-SPEC.md
+Last session: 2026-06-06T09:02:56.125Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None

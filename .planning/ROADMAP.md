@@ -134,7 +134,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 05-01-PLAN.md — Grid initial-load pulse skeletons (MOT-01), SafeImage onError fallback (MOT-02), and ProductCard motion-safe hover lift (MOT-04)
+- [x] 05-01-PLAN.md — Grid initial-load pulse skeletons (MOT-01), SafeImage onError fallback (MOT-02), and ProductCard motion-safe hover lift (MOT-04)
 
 **Wave 2** *(blocked on Wave 1 completion — shares ProductGrid.tsx)*
 
@@ -183,6 +183,6 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 2. Mock-API Layer | 2/2 | Complete    | 2026-06-03 |
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
-| 5. Motion & Loading Polish | 0/2 | Not started | - |
+| 5. Motion & Loading Polish | 1/2 | In Progress|  |
 | 6. Real Backend Endpoint | 0/TBD | Not started | - |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
