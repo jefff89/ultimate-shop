@@ -23,10 +23,10 @@ Requirements for this milestone: a scalable single-store catalog schema + an ani
 
 ### Catalog API (real backend)
 
-- [ ] **CAT-01**: `GET /products` returns a keyset-paginated page (`items`, `nextCursor`, `hasMore`) conforming to `CatalogPage`
-- [ ] **CAT-02**: Pagination uses `(createdAt DESC, id DESC)` with the `id` tiebreaker so no card is skipped or duplicated across page boundaries
-- [ ] **CAT-03**: The listing endpoint enforces a maximum page-size cap
-- [ ] **CAT-04**: Feed-rail data (featured, trending, categories) is retrievable via dedicated query endpoints, separate from the cursor stream
+- [x] **CAT-01**: `GET /products` returns a keyset-paginated page (`items`, `nextCursor`, `hasMore`) conforming to `CatalogPage`
+- [x] **CAT-02**: Pagination uses `(createdAt DESC, id DESC)` with the `id` tiebreaker so no card is skipped or duplicated across page boundaries
+- [x] **CAT-03**: The listing endpoint enforces a maximum page-size cap
+- [x] **CAT-04**: Feed-rail data (featured, trending, categories) is retrievable via dedicated query endpoints, separate from the cursor stream
 
 ### Mock API
 
@@ -128,10 +128,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | MOT-02 | Phase 5 | Complete |
 | MOT-03 | Phase 5 | Complete |
 | MOT-04 | Phase 5 | Complete |
-| CAT-01 | Phase 6 | Pending |
-| CAT-02 | Phase 6 | Pending |
-| CAT-03 | Phase 6 | Pending |
-| CAT-04 | Phase 6 | Pending |
+| CAT-01 | Phase 6 | Complete |
+| CAT-02 | Phase 6 | Complete |
+| CAT-03 | Phase 6 | Complete |
+| CAT-04 | Phase 6 | Complete |
 
 **Coverage:**
 

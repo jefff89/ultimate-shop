@@ -192,5 +192,5 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
 | 5. Motion & Loading Polish | 2/2 | Complete    | 2026-06-06 |
-| 6. Real Backend Endpoint | 2/2 | Complete   | 2026-06-07 |
+| 6. Real Backend Endpoint | 2/2 | Complete    | 2026-06-07 |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
