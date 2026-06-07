@@ -1,0 +1,7 @@
+{
+  "name": "@shared/contract",
+  "private": true,
+  "dependencies": {
+    "zod": "4.2.1"
+  }
+}
