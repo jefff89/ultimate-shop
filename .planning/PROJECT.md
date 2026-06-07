@@ -31,8 +31,8 @@ Shoppers can browse a large catalog through a smooth, fast, infinite-scrolling h
 
 <!-- This milestone. Hypotheses until shipped. -->
 
-- [ ] Cursor-based pagination on the products/catalog listing endpoint (scalable for infinite scroll) — contract + cursor codec frozen in Phase 1; the real endpoint lands in Phase 6
-- [ ] Animated landing page: composed homepage feed (featured / categories / trending sections) — Phase 4 composes this feed above the Phase 3 grid
+- ✓ Cursor-based pagination on the products/catalog listing endpoint — `GET /products` keyset-paginated over `(createdAt DESC, id DESC)` with opaque cursor, `CatalogPage<CatalogProductCard>` egress contract, 7/7 tests green — Validated in Phase 6: real-backend-endpoint (CAT-01/02/03). Feed rails `GET /products/featured|trending|categories` return plain bounded arrays with zero cursor state (CAT-04), 9/9 tests green. Live-DB smoke test deferred to Phase 7.
+- ✓ Animated landing page: composed homepage feed (featured / categories / trending sections) — Phase 4 composes this feed above the Phase 3 grid — Validated in Phase 4: animated-landing-feed
 
 ### Out of Scope
 
@@ -88,4 +88,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-06 after Phase 5 (motion-loading-polish) completion*
+*Last updated: 2026-06-07 2026-06-06 after Phase 5 (motion-loading-polish) completion*
