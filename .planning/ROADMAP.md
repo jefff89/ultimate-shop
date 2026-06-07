@@ -174,11 +174,19 @@ Decimal phases appear between their surrounding integers in numeric order.
 
   1. Flipping `data/catalog.ts` from the mock source to the real client requires no changes to any UI component
   2. The landing page loads, scrolls, and paginates correctly against the real `GET /products` with no duplicate page-1 request on hard load
-  3. Scroll position is restored on back-navigation from a product visit with loaded items intact
+  3. ~~Scroll position is restored on back-navigation from a product visit with loaded items intact~~ **(DROPPED from Phase 7 — no product detail route / card Link this milestone; `scrollRestoration: true` is added as future-proof infrastructure only, not a success criterion)**
   4. End-to-end verification passes: shared Zod schema catches no contract drift, `EXPLAIN ANALYZE` confirms the composite index is used, and Lighthouse CLS ≤ 0.1
 
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
+
+**Wave 1**
+
+- [ ] 07-01-PLAN.md — Seed 200+ products + categories, build catalog.source.real.ts (createServerFn proxy + Zod egress gate), flip the seam, add scrollRestoration; full Vitest suite green proves zero UI changes (SC1)
+
+**Wave 2** *(blocked on Wave 1 — needs the seam flipped and DB seeded)*
+
+- [ ] 07-02-PLAN.md — E2E verification: EXPLAIN ANALYZE index use, no-duplicate-page-1 on hard load, Lighthouse CLS ≤ 0.1, live Zod drift gate (SC2, SC4)
 
 ## Progress
 
@@ -193,4 +201,4 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
 | 5. Motion & Loading Polish | 2/2 | Complete    | 2026-06-06 |
 | 6. Real Backend Endpoint | 2/2 | Complete    | 2026-06-07 |
-| 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
+| 7. Mock-to-Real Swap + Polish | 0/2 | Planned     | - |
