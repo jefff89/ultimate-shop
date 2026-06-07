@@ -5,6 +5,15 @@ import { __sortedRowsForTest, fetchCatalogPage } from './catalog.source.mock'
 import { fetchCatalogPage as fetchCatalogPageFromSeam } from './catalog'
 import type { CatalogProductCard } from '@shared/catalog.contract'
 
+// After Phase 7 the seam points to catalog.source.real whose createServerFn wrapper
+// requires the Start server runtime (not available under Vitest). Mock the seam
+// module to resolve to the mock source so the "seam re-exports fetchCatalogPage"
+// test can call through it and verify contract conformance without a backend.
+vi.mock('./catalog', async () => {
+  const { fetchCatalogPage: fcp, fetchFeaturedProducts, fetchTrendingProducts, fetchCategories } = await import('./catalog.source.mock')
+  return { fetchCatalogPage: fcp, fetchFeaturedProducts, fetchTrendingProducts, fetchCategories }
+})
+
 // Hard cap so a pagination bug fails fast instead of looping forever.
 // (PRODUCT_COUNT is 240 at DEFAULT_PAGE_SIZE 24 -> ~10 pages; 1000 is generous.)
 const WALK_CAP = 1000

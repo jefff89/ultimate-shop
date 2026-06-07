@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { CategoryRailItemSchema } from '@shared/catalog.contract'
 import { CATALOG_QUERY_KEY } from '@/data/catalog.query'
 import {
@@ -6,6 +6,20 @@ import {
   fetchFeaturedProducts,
   fetchTrendingProducts,
 } from '@/data/catalog'
+
+// After Phase 7 the seam points to catalog.source.real which needs the Start
+// server runtime. Mock @/data/catalog to return the mock source so these tests
+// (which exercise mock-source behavior like isFeatured/isTrending filtering and
+// determinism) continue to pass without a running backend.
+vi.mock('@/data/catalog', async () => {
+  const mock = await import('./catalog.source.mock')
+  return {
+    fetchCatalogPage: mock.fetchCatalogPage,
+    fetchFeaturedProducts: mock.fetchFeaturedProducts,
+    fetchTrendingProducts: mock.fetchTrendingProducts,
+    fetchCategories: mock.fetchCategories,
+  }
+})
 import {
   RAIL_LIMIT,
   categoriesRailQueryOptions,

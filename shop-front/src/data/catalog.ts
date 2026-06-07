@@ -10,4 +10,4 @@ export {
   fetchFeaturedProducts,
   fetchTrendingProducts,
   fetchCategories,
-} from './catalog.source.mock'
+} from './catalog.source.real'
