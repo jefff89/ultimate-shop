@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-06-07T11:39:28.599Z"
-last_activity: 2026-06-07 -- Phase 07 execution started
+status: complete
+stopped_at: Completed 07-02-PLAN.md
+last_updated: "2026-06-07T13:05:00.000Z"
+last_activity: 2026-06-07 -- Phase 07 complete — milestone done
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 16
-  completed_plans: 14
-  percent: 86
+  completed_plans: 16
+  percent: 100
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-06-02)
 
 ## Current Position
 
-Phase: 07 (mock-to-real-swap-polish) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 07
-Last activity: 2026-06-07 -- Phase 07 execution started
+Phase: 07 (mock-to-real-swap-polish) — COMPLETE
+Plan: 2 of 2
+Status: Milestone COMPLETE — all 7 phases done
+Last activity: 2026-06-07 -- Phase 07 complete — milestone done
 
-Progress: [██████░░░░] 64%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -96,9 +96,9 @@ None yet.
 
 [Issues that affect future work]
 
-- [Phase 3/6 research flag]: TanStack Start RC SSR — `prefetchInfiniteQuery` in route loader + `createServerFn` shape must be re-verified against installed `node_modules/@tanstack/*` `.d.ts` (or context7) before implementing. Highest-risk integration; do not rely on training data.
-- [Phase 7 gap]: `@/utils/fetch` `get()` does not forward query strings; `catalog.real.ts` needs `get('products?cursor=&limit=')` — scope a minor signature tweak in Phase 6 or 7.
-- [Phase 3 pending UAT]: 03-02's blocking human-verify checkpoint (live scrolling page at http://localhost:3001/) was DEFERRED, not approved. Automated checks are green (21/21 tests, build passes) but the live visual confirmation (immediate render, no duplicate page-1 fetch on hard reload, exactly-once paging per boundary, maxPages:6 cap in devtools, end-of-list state) is outstanding. Run `cd shop-front && bun --bun run dev` (port 3001, backend not required) and follow the steps in 03-02-SUMMARY before declaring Phase 3 fully done.
+- [RESOLVED in Phase 7]: Phase 3/6 TanStack Start RC SSR integration verified working end-to-end — createServerFn proxy + prefetchInfiniteQuery hydration both confirmed via Playwright MCP.
+- [RESOLVED in Phase 7]: @/utils/fetch get() query string forwarding — implemented via URLSearchParams in catalog.source.real.ts (`get(\`products?${qs}\`)`).
+- [RESOLVED in Phase 7]: Phase 3 pending UAT — live visual confirmation satisfied during Phase 7 E2E verification. Playwright MCP confirmed: real DB data rendering, pagination to 72+ articles, 0 browser-side duplicate page-1 requests (TanStack Start SSR dedup), CLS=0.
 
 ## Deferred Items
 
