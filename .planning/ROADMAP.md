@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Infinite-Scroll Grid** - Product grid that loads pages on scroll via useInfiniteQuery + IntersectionObserver, with end/cap states (completed 2026-06-03)
 - [x] **Phase 4: Composed Landing Feed** - Hero + Featured/Categories/Trending rails above the grid, fetched independently of the cursor stream (completed 2026-06-06)
 - [x] **Phase 5: Motion & Loading Polish** - Skeletons, lazy images with no CLS, restrained motion-safe reveals and card hover (completed 2026-06-06)
-- [ ] **Phase 6: Real Backend Endpoint** - GET /products keyset pagination + feed-rail endpoints conforming to the same contract (parallel with 2-5)
+- [x] **Phase 6: Real Backend Endpoint** - GET /products keyset pagination + feed-rail endpoints conforming to the same contract (parallel with 2-5) (completed 2026-06-07)
 - [ ] **Phase 7: Mock-to-Real Swap + Polish** - Flip the data seam to the real API and verify end-to-end (no regressions, index used, CLS clean)
 
 ## Phase Details
@@ -162,7 +162,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 2** *(blocked on Wave 1 — shares products.service.ts/controller.ts)*
 
-- [ ] 06-02-PLAN.md — Dedicated feed-rail endpoints GET /products/{featured,trending,categories} (CAT-04)
+- [x] 06-02-PLAN.md — Dedicated feed-rail endpoints GET /products/{featured,trending,categories} (CAT-04)
 
 ### Phase 7: Mock-to-Real Swap + Polish
 
@@ -192,5 +192,5 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
 | 5. Motion & Loading Polish | 2/2 | Complete    | 2026-06-06 |
-| 6. Real Backend Endpoint | 1/2 | In Progress|  |
+| 6. Real Backend Endpoint | 2/2 | Complete   | 2026-06-07 |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
