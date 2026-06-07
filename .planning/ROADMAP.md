@@ -158,7 +158,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 06-01-PLAN.md — Resolve the @shared/catalog.contract zod-runtime blocker + Jest @shared mapper, then ship GET /products keyset pagination (CAT-01/02/03)
+- [x] 06-01-PLAN.md — Resolve the @shared/catalog.contract zod-runtime blocker + Jest @shared mapper, then ship GET /products keyset pagination (CAT-01/02/03)
 
 **Wave 2** *(blocked on Wave 1 — shares products.service.ts/controller.ts)*
 
@@ -192,5 +192,5 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 3. Infinite-Scroll Grid | 2/2 | Complete    | 2026-06-03 |
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
 | 5. Motion & Loading Polish | 2/2 | Complete    | 2026-06-06 |
-| 6. Real Backend Endpoint | 0/2 | Not started | - |
+| 6. Real Backend Endpoint | 1/2 | In Progress|  |
 | 7. Mock-to-Real Swap + Polish | 0/TBD | Not started | - |
