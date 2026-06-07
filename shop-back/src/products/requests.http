@@ -35,3 +35,15 @@ GET http://localhost:3002/products?cursor=PASTE_NEXT_CURSOR_HERE
 ### Tampered cursor -> expect HTTP 400
 GET http://localhost:3002/products?cursor=not-a-real-cursor
 
+### Featured rail (plain CatalogProductCard[], only isFeatured, default cap 12)
+GET http://localhost:3002/products/featured
+
+### Featured rail with explicit limit
+GET http://localhost:3002/products/featured?limit=6
+
+### Trending rail (plain CatalogProductCard[], only isTrending)
+GET http://localhost:3002/products/trending
+
+### Categories rail (plain CategoryRailItem[] of { id, name, slug })
+GET http://localhost:3002/products/categories
+
