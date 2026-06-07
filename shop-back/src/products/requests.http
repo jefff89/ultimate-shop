@@ -20,5 +20,18 @@ content-type: application/json
   ]
 }
 
+### Catalog page 1 (default page size = 24)
+GET http://localhost:3002/products
 
+### Catalog page 1 with explicit limit
+GET http://localhost:3002/products?limit=24
+
+### Limit clamp check (returns at most 48 items)
+GET http://localhost:3002/products?limit=999
+
+### Next page (paste a nextCursor from a previous response)
+GET http://localhost:3002/products?cursor=PASTE_NEXT_CURSOR_HERE
+
+### Tampered cursor -> expect HTTP 400
+GET http://localhost:3002/products?cursor=not-a-real-cursor
 
