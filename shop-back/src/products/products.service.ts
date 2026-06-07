@@ -4,16 +4,33 @@ import { Product } from './product.entity';
 import { Tag } from 'src/tags/tags.entity';
 import { Category } from 'src/categories/categories.entity';
 import { Repository } from 'typeorm';
+import { z } from 'zod';
 import {
   CatalogProductCardPageSchema,
+  CatalogProductCardSchema,
+  CategoryRailItemSchema,
   type CatalogProductCard,
   type CatalogProductCardPage,
+  type CategoryRailItem,
 } from '@shared/catalog.contract';
 import { decodeCursor, encodeCursor } from '@shared/cursor';
 
 // Mock-identical page-size bounds (catalog.source.mock.ts L27-28, CAT-03).
 const DEFAULT_PAGE_SIZE = 24;
 const MAX_PAGE_SIZE = 48;
+
+// Feed-rail default cap (catalog.source.mock.ts L172, CAT-04). RAIL_DEFAULT_LIMIT
+// (12) <= MAX_PAGE_SIZE so the cap always binds for an arg-less rail call.
+const RAIL_DEFAULT_LIMIT = 12;
+
+// The allowlisted boolean flag columns a rail may filter on. Binding the column
+// name from this fixed set (never raw input) closes the SQL-injection vector
+// (T-06-07) while letting featured/trending share one query builder.
+const RAIL_FLAG_COLUMNS = {
+  isFeatured: 'product.isFeatured',
+  isTrending: 'product.isTrending',
+} as const;
+type RailFlag = keyof typeof RAIL_FLAG_COLUMNS;
 
 // The "from" price: basePrice when set, else the minimum active variant price.
 // Products with neither are excluded from the listing (D-06). Column/table
@@ -146,6 +163,111 @@ export class ProductsService {
 
     // Egress contract boundary (CONT-01).
     return CatalogProductCardPageSchema.parse({ items, nextCursor, hasMore });
+  }
+
+  // Bound a rail limit the SAME way the cursor seam bounds its page size
+  // (catalog.source.mock.ts L176-182, CAT-04 / T-06-05): fall back to
+  // RAIL_DEFAULT_LIMIT, guard NaN/Infinity/fractional, floor once, clamp to
+  // [1, MAX_PAGE_SIZE]. Defends the rail routes against an unbounded `limit`.
+  private boundRailLimit(limit?: number): number {
+    const requested = limit ?? RAIL_DEFAULT_LIMIT;
+    return Math.min(
+      Math.max(
+        Number.isFinite(requested) ? Math.floor(requested) : RAIL_DEFAULT_LIMIT,
+        1,
+      ),
+      MAX_PAGE_SIZE,
+    );
+  }
+
+  /**
+   * Shared filtered-rail query (CAT-04). Returns ONLY active rows whose
+   * allowlisted boolean `flag` column is true, in the canonical
+   * (createdAt DESC, id DESC) order, capped at the bounded rail limit, projected
+   * field-by-field through `toCard` (decimal STRING -> Number) so no internal
+   * column leaks (T-06-06). Produces a PLAIN array — no cursor/hasMore state,
+   * structurally separate from findCatalogPage.
+   *
+   * The flag column name is resolved from RAIL_FLAG_COLUMNS (a fixed allowlist),
+   * never interpolated from caller input (T-06-07); the truth value and the
+   * limit are bound/passed as a named param / clamped integer.
+   */
+  private async railByFlag(
+    flag: RailFlag,
+    limit?: number,
+  ): Promise<CatalogProductCard[]> {
+    const column = RAIL_FLAG_COLUMNS[flag];
+
+    const rows: RawCatalogRow[] = await this.productRepo
+      .createQueryBuilder('product')
+      .select([
+        'product.id',
+        'product.name',
+        'product.slug',
+        'product.primaryImageUrl',
+        'product.rating',
+        'product.reviewCount',
+        'product.isFeatured',
+        'product.isTrending',
+        'product.createdAt',
+      ])
+      // Same scalar "from" price subquery as findCatalogPage (no relation join).
+      .addSelect(PRICE_EXPR, 'price')
+      .where('product.isActive = :active', { active: true })
+      // Exclude price-less products (D-06) — identical to the cursor stream.
+      .andWhere(`${PRICE_EXPR} IS NOT NULL`)
+      // Allowlisted flag column; truth value bound, not interpolated.
+      .andWhere(
+        `${column} = :${flag === 'isFeatured' ? 'f' : 't'}`,
+        flag === 'isFeatured' ? { f: true } : { t: true },
+      )
+      .orderBy('product.createdAt', 'DESC')
+      .addOrderBy('product.id', 'DESC')
+      .limit(this.boundRailLimit(limit))
+      .getRawMany();
+
+    const items = rows.map((row) => this.toCard(row));
+    // Egress contract boundary (mirrors the page parse; fail loud on drift).
+    return z.array(CatalogProductCardSchema).parse(items);
+  }
+
+  /**
+   * Featured rail (CAT-04): ONLY isFeatured active rows, canonical order,
+   * bounded, contract-shaped. Plain array, no cursor/hasMore.
+   */
+  async findFeaturedProducts(
+    args: { limit?: number } = {},
+  ): Promise<CatalogProductCard[]> {
+    return this.railByFlag('isFeatured', args.limit);
+  }
+
+  /**
+   * Trending rail (CAT-04): ONLY isTrending active rows, same ordering/cap/shape.
+   */
+  async findTrendingProducts(
+    args: { limit?: number } = {},
+  ): Promise<CatalogProductCard[]> {
+    return this.railByFlag('isTrending', args.limit);
+  }
+
+  /**
+   * Categories rail (CAT-04): the real closure-table Category projected to the
+   * lean { id, name, slug } CategoryRailItem (RESEARCH A4). NO tree/parent/
+   * children/description hydration (T-06-06) — each row validated at the egress
+   * boundary. Returns [] when the table is empty (the route still returns a
+   * valid array). Resolves independently of any product fetch.
+   */
+  async findCategories(): Promise<CategoryRailItem[]> {
+    const rows = await this.categoryRepo.find({
+      select: { id: true, name: true, slug: true },
+    });
+    return rows.map((row) =>
+      CategoryRailItemSchema.parse({
+        id: row.id,
+        name: row.name,
+        slug: row.slug,
+      }),
+    );
   }
 
   // Field-by-field projection (never spread the raw row — would leak createdAt,
