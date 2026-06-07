@@ -182,7 +182,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **Wave 1**
 
-- [ ] 07-01-PLAN.md — Seed 200+ products + categories, build catalog.source.real.ts (createServerFn proxy + Zod egress gate), flip the seam, add scrollRestoration; full Vitest suite green proves zero UI changes (SC1)
+- [x] 07-01-PLAN.md — Seed 200+ products + categories, build catalog.source.real.ts (createServerFn proxy + Zod egress gate), flip the seam, add scrollRestoration; full Vitest suite green proves zero UI changes (SC1)
 
 **Wave 2** *(blocked on Wave 1 — needs the seam flipped and DB seeded)*
 
@@ -201,4 +201,4 @@ Phase 1 (blocker) → then [Phases 2 → 3 → 4 → 5] and [Phase 6] in paralle
 | 4. Composed Landing Feed | 3/3 | Complete    | 2026-06-06 |
 | 5. Motion & Loading Polish | 2/2 | Complete    | 2026-06-06 |
 | 6. Real Backend Endpoint | 2/2 | Complete    | 2026-06-07 |
-| 7. Mock-to-Real Swap + Polish | 0/2 | Planned     | - |
+| 7. Mock-to-Real Swap + Polish | 1/2 | In Progress|  |
