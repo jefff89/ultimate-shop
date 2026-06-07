@@ -34,6 +34,30 @@ export class ProductsController {
     }
   }
 
+  // Public feed-rail reads (Security V2 — no guard). Static path segments, so
+  // they do NOT collide with the parameter-less base @Get() list above. Each
+  // returns a plain, bounded array structurally separate from the cursor stream
+  // (CAT-04). The global ThrottlerGuard rate-limits these (T-06-05). The `limit`
+  // query param is re-clamped inside the service via boundRailLimit.
+  @Get('featured')
+  async featured(@Query('limit') limit?: string) {
+    return this.productsService.findFeaturedProducts({
+      limit: limit != null ? parseInt(limit, 10) : undefined,
+    });
+  }
+
+  @Get('trending')
+  async trending(@Query('limit') limit?: string) {
+    return this.productsService.findTrendingProducts({
+      limit: limit != null ? parseInt(limit, 10) : undefined,
+    });
+  }
+
+  @Get('categories')
+  async categories() {
+    return this.productsService.findCategories();
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard, AdminGuard)
   async createProduct(@Body() body: CreateProductDto) {
